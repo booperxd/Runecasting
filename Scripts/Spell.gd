@@ -3,7 +3,6 @@ class_name Spell
 extends Node
 
 var spell_name : String
-var pattern : Array
 var cost : float
 var variables : Dictionary
 var returns : Array 

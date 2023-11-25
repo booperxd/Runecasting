@@ -5,4 +5,4 @@ extends Node
 var value
 
 func _init(_value):
-    value = _value
+	value = _value

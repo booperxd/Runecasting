@@ -28,7 +28,7 @@ func find_spell(pattern : Array):
 			if not spell.variables.is_empty():
 				var dict = {}
 				for v in spell.variables:
-					dict[v] = pop_stack().value
+					dict[v] = pop_stack()
 				spell.handle_variables(dict)
 			return spell
 	
@@ -38,10 +38,12 @@ func process_spell(pattern : Array):
 	var s = find_spell(pattern)
 	if s == null:
 		return null
-	var s_i = StackItem.new()
-	s_i.value = s.spell_effect()
-	if s_i != null:
-		push_stack(s_i)
+	var results_array = []
+	results_array = s.spell_effect()
+	for r in results_array:
+		var s_i = r
+		if s_i != null:
+			push_stack(s_i)
 
 func push_stack(stack_item):
 	stack.append(stack_item)

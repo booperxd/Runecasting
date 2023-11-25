@@ -7,11 +7,10 @@ var y
 
 func _init():
 	spell_name = "Addition"
-	pattern = ["dru", "dru", "l", "dld", "dld"]
 	cost = 0
 	variables = {"x" : "int", "y" : "int"}
 
 func spell_effect():
 	if x != null and y != null:
-		returns.append(StackItem.new(x + y))
+		returns.append(StackItem.new(x.value + y.value))
 	return returns 

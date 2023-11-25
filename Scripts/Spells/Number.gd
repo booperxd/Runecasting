@@ -6,7 +6,6 @@ var number
 
 func _init():
 	spell_name = "Number"
-	pattern = ["r"]
 	cost = 0
 	variables = {"number" : "int"}
 
