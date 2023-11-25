@@ -15,21 +15,20 @@ func _ready():
 func find_spell(pattern : Array):
 	var spell = null
 	for p in spell_data:
+		if Global.check_if_all_dups(pattern) and pattern[0] == spell_data[p][0]:
+			spell = load(SPELL_PATH + p + ".gd").new()
+			if not spell.variables.is_empty():
+				var dict = {}
+				for v in spell.variables:
+					dict[v] = pattern.size()
+				spell.handle_variables(dict)
+			return spell
 		if pattern == spell_data[p]:
 			spell = load(SPELL_PATH + p + ".gd").new()
 			if not spell.variables.is_empty():
 				var dict = {}
 				for v in spell.variables:
 					dict[v] = pop_stack().value
-				spell.handle_variables(dict)
-			return spell
-			
-		elif Global.check_if_all_dups(pattern) and pattern[0] == spell_data[p][0]:
-			spell = load(SPELL_PATH + p + ".gd").new()
-			if not spell.variables.is_empty():
-				var dict = {}
-				for v in spell.variables:
-					dict[v] = pattern.size()
 				spell.handle_variables(dict)
 			return spell
 	

@@ -11,5 +11,6 @@ func _init():
 	variables = {"number" : "int"}
 
 func spell_effect():
-	return number
+	returns.append(StackItem.new(number))
+	return returns
 

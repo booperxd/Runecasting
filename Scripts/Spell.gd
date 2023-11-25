@@ -6,6 +6,7 @@ var spell_name : String
 var pattern : Array
 var cost : float
 var variables : Dictionary
+var returns : Array 
 
 func spell_effect():
 	pass

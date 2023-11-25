@@ -1,4 +1,6 @@
 {
     "Number" : ["r"],
-    "Add" : ["dur", "dur", "l", "ddr", "ddr"]
+    "Add" : ["dur", "dur", "l", "ddr", "ddr"],
+    "Subtract" : ["dul", "dul", "r", "ddl", "ddl"],
+    "Flip" : ["r", "dul", "ddl", "ddl", "dul", "r"]
 }
