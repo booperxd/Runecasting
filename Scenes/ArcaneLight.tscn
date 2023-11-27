@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://d12l0hchsos47"]
+
+[ext_resource type="Texture2D" uid="uid://cvtl2of3v7was" path="res://Textures/Particles/PNG (Transparent)/magic_05.png" id="1_rxa8n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kb1kl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrf0s"]
+transparency = 1
+blend_mode = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_rxa8n")
+billboard_mode = 1
+
+[sub_resource type="Curve" id="Curve_6lwhl"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0.00649351, -329.684), 0.0, 0.0, 0, 0, Vector2(1, 352.421), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5h3qa"]
+curve = SubResource("Curve_6lwhl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f5ts3"]
+emission_shape = 2
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+angle_min = 360.0
+angle_max = 360.0
+angle_curve = SubResource("CurveTexture_5h3qa")
+
+[sub_resource type="QuadMesh" id="QuadMesh_yhejs"]
+
+[node name="ArcaneLight" type="Area3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_kb1kl")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.486275, 0.305882, 0.94902, 1)
+light_energy = 4.003
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_nrf0s")
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_f5ts3")
+draw_pass_1 = SubResource("QuadMesh_yhejs")

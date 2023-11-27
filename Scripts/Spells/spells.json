@@ -1,6 +1,14 @@
 {
 	"Number" : ["r"],
-	"Add" : ["dur", "dur", "l", "ddr", "ddr"],
-	"Subtract" : ["dul", "dul", "r", "ddl", "ddl"],
-	"Flip" : ["r", "dul", "ddl", "ddl", "dul", "r"]
+	"Add" : ["l", "ddr", "ddl", "r"],
+	"Subtract" : ["r", "dul", "ddl"],
+	"Flip" : ["r", "dul", "ddl", "ddl", "dul", "r"],
+	"PopStack" : ["r", "ddr", "dur"],
+	"SelfReference" : ["dur", "dul", "ddl", "ddr"],
+	"EntityPosition" : ["r", "r", "ddr"],
+	"EntityDirection" : ["r", "r", "dur"],
+	"SummonLight" : ["dur", "dul", "l", "dur"],
+	"MoveEntity" : ["r", "ddr", "ddl", "l", "dur", "dul"],
+	"LowerGravity" : ["l", "ddl", "ddr", "r", "dur", "l"],
+	"Multiply" : ["u", "r", "d"]
 }

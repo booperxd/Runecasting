@@ -14,18 +14,21 @@ func _ready():
 
 func find_spell(pattern : Array):
 	var spell = null
+	print(pattern)
 	for p in spell_data:
-		if Global.check_if_all_dups(pattern) and pattern[0] == spell_data[p][0]:
+		if Global.check_if_all_dups(pattern) and pattern[0] == spell_data[p][0] and Global.check_if_all_dups(spell_data[p]):
 			spell = load(SPELL_PATH + p + ".gd").new()
-			if not spell.variables.is_empty():
-				var dict = {}
-				for v in spell.variables:
-					dict[v] = pattern.size()
-				spell.handle_variables(dict)
+			if spell.variables.is_empty():
+				if spell is Number:
+					spell.number = pattern.size()
 			return spell
 		if pattern == spell_data[p]:
 			spell = load(SPELL_PATH + p + ".gd").new()
-			if not spell.variables.is_empty():
+			if spell.variables.is_empty():
+				if spell is SelfReference:
+					#this sucks, get rid of this
+					spell.entity = owner.owner.get_node("Entity")
+			elif not spell.variables.is_empty():
 				var dict = {}
 				for v in spell.variables:
 					dict[v] = pop_stack()
@@ -39,7 +42,7 @@ func process_spell(pattern : Array):
 	if s == null:
 		return null
 	var results_array = []
-	results_array = s.spell_effect()
+	results_array = await s.spell_effect()
 	for r in results_array:
 		var s_i = r
 		if s_i != null:
@@ -50,10 +53,16 @@ func push_stack(stack_item):
 	Global.stack_changed.emit(stack)
 
 func pop_stack():
-	return stack.pop_back()
+	var temp = stack.pop_back()
 	Global.stack_changed.emit(stack)
+	return temp
 
 func get_pattern_direction(o : Vector2, d : Vector2):
+	if o.x == d.x:
+		if d.y < o.y:
+			return "u"
+		else:
+			return "d"
 	if o.y == d.y:
 		if d.x > o.x:
 			return "r"

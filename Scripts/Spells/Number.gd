@@ -7,7 +7,6 @@ var number
 func _init():
 	spell_name = "Number"
 	cost = 0
-	variables = {"number" : "int"}
 
 func spell_effect():
 	returns.append(StackItem.new(number))

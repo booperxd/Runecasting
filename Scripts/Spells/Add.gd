@@ -8,7 +8,7 @@ var y
 func _init():
 	spell_name = "Addition"
 	cost = 0
-	variables = {"x" : "int", "y" : "int"}
+	variables = {"x" : "int/vector", "y" : "int/vector"}
 
 func spell_effect():
 	if x != null and y != null:

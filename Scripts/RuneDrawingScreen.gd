@@ -59,5 +59,5 @@ func update_stack_display(stack):
 		c.queue_free()
 	for s_i in stack:
 		var label = Label.new()
-		label.text = str(s_i.value)
+		label.text = s_i.stack_item_display()
 		stack_display.add_child(label)

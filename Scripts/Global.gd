@@ -4,6 +4,7 @@ signal current_star(position)
 
 signal stack_changed(stack)
 
+var current_scene
 
 func check_if_all_dups(array : Array):
 	var dict : Dictionary

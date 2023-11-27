@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccqytdvewgntf"]
+
+[ext_resource type="Script" path="res://Scripts/character_new.gd" id="1_02ng4"]
+[ext_resource type="PackedScene" uid="uid://c4cqyi8wtrqxl" path="res://Scenes/RuneUI.tscn" id="2_qe5y1"]
+[ext_resource type="Script" path="res://Scripts/Entity.gd" id="3_255ea"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wiiv"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_02ng4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_8wiiv")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+
+[node name="RuneUI" parent="Camera3D/CanvasLayer" instance=ExtResource("2_qe5y1")]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Entity" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_255ea")
