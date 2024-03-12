@@ -1,0 +1,138 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwxti633ig2ml"]
+
+[ext_resource type="Script" path="res://Scripts/notebook.gd" id="1_c0de2"]
+[ext_resource type="Texture2D" uid="uid://c23u4fcpw8f2f" path="res://Textures/UI/BookPage.png" id="1_utpxo"]
+
+[node name="Notebook" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c0de2")
+
+[node name="ParentContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -379.0
+offset_top = -217.5
+offset_right = 379.0
+offset_bottom = 217.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ParentContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ChapterPage" type="TextureRect" parent="ParentContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_utpxo")
+
+[node name="PageContainer" type="VBoxContainer" parent="ParentContainer/HBoxContainer/ChapterPage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="ParentContainer/HBoxContainer/ChapterPage/PageContainer"]
+layout_mode = 2
+text = "Chapters"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftPage" type="TextureRect" parent="ParentContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_utpxo")
+
+[node name="PageContainer" type="VBoxContainer" parent="ParentContainer/HBoxContainer/LeftPage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="ParentContainer/HBoxContainer/LeftPage/PageContainer"]
+layout_mode = 2
+text = "<Title>"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pattern" type="Label" parent="ParentContainer/HBoxContainer/LeftPage/PageContainer"]
+layout_mode = 2
+text = "<Pattern>"
+autowrap_mode = 2
+
+[node name="Description" type="Label" parent="ParentContainer/HBoxContainer/LeftPage/PageContainer"]
+layout_mode = 2
+text = "<Description>"
+autowrap_mode = 2
+
+[node name="Container" type="Container" parent="ParentContainer/HBoxContainer/LeftPage/PageContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Back" type="Button" parent="ParentContainer/HBoxContainer/LeftPage/PageContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "<-"
+
+[node name="RightPage" type="TextureRect" parent="ParentContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_utpxo")
+
+[node name="PageContainer" type="VBoxContainer" parent="ParentContainer/HBoxContainer/RightPage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
+layout_mode = 2
+text = "<Title>"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pattern" type="Label" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
+layout_mode = 2
+text = "<Pattern>"
+autowrap_mode = 2
+
+[node name="Description" type="Label" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
+layout_mode = 2
+text = "<Description>"
+autowrap_mode = 2
+
+[node name="Container" type="Container" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Next" type="Button" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "->"
+
+[node name="ReturnButton" type="Button" parent="ParentContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Return"
+
+[connection signal="pressed" from="ParentContainer/HBoxContainer/LeftPage/PageContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="ParentContainer/HBoxContainer/RightPage/PageContainer/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="ParentContainer/ReturnButton" to="." method="_on_return_button_pressed"]

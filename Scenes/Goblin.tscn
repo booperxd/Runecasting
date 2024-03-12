@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2c5s4abdev47"]
+
+[ext_resource type="Script" path="res://Scripts/Goblin.gd" id="1_dr23c"]
+[ext_resource type="PackedScene" uid="uid://dl0qhhhxfbca" path="res://Models/Blue Demon.glb" id="1_rfmnv"]
+[ext_resource type="Script" path="res://Scripts/Entity.gd" id="3_wrh4c"]
+[ext_resource type="PackedScene" uid="uid://0j5wlyiujxdb" path="res://Scenes/HealthComponent.tscn" id="4_kvxls"]
+[ext_resource type="PackedScene" uid="uid://5rg8wvhftb45" path="res://Scenes/HitboxComponent.tscn" id="5_k3l8o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3uyv"]
+height = 1.5
+
+[node name="Goblin" type="CharacterBody3D"]
+collision_layer = 4
+script = ExtResource("1_dr23c")
+
+[node name="Blue Demon" parent="." instance=ExtResource("1_rfmnv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.674753, 0)
+shape = SubResource("CapsuleShape3D_s3uyv")
+
+[node name="Entity" type="Node3D" parent="."]
+script = ExtResource("3_wrh4c")
+
+[node name="HealthComponent" parent="Entity" instance=ExtResource("4_kvxls")]
+max_health = 4
+
+[node name="HitboxComponent" parent="Entity" instance=ExtResource("5_k3l8o")]

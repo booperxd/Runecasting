@@ -5,10 +5,12 @@
 	"Flip" : ["r", "dul", "ddl", "ddl", "dul", "r"],
 	"PopStack" : ["r", "ddr", "dur"],
 	"SelfReference" : ["dur", "dul", "ddl", "ddr"],
+	"ArcaneRaycast" : ["r", "r", "dul", "d", "dur"],
 	"EntityPosition" : ["r", "r", "ddr"],
 	"EntityDirection" : ["r", "r", "dur"],
 	"SummonLight" : ["dur", "dul", "l", "dur"],
 	"MoveEntity" : ["r", "ddr", "ddl", "l", "dur", "dul"],
 	"LowerGravity" : ["l", "ddl", "ddr", "r", "dur", "l"],
-	"Multiply" : ["u", "r", "d"]
+	"Multiply" : ["u", "r", "d"],
+	"ArcaneBlock" : ["u", "r", "d", "l", "dur"]
 }

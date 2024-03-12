@@ -3,6 +3,7 @@ class_name Spell
 extends Node
 
 var spell_name : String
+var unlocked_by_default : bool = false
 var cost : float
 var variables : Dictionary
 var returns : Array 

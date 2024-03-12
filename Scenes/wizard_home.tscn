@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2tkq7p2e4dcb"]
+
+[ext_resource type="Texture2D" uid="uid://cmfkyjojyi6rf" path="res://Textures/Prototype/PNG/Dark/texture_08.png" id="1_sgua8"]
+[ext_resource type="PackedScene" uid="uid://ccqytdvewgntf" path="res://Scenes/Player.tscn" id="2_gi3r7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e8y0m"]
+albedo_texture = ExtResource("1_sgua8")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hsw3b"]
+material = SubResource("StandardMaterial3D_e8y0m")
+size = Vector2(75, 75)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_we7bp"]
+points = PackedVector3Array(38.0952, 0.595238, 38.0952, -38.0952, -0.595238, -38.0952, -38.0952, 0.595238, -38.0952, 38.0952, -0.595238, -38.0952, -38.0952, -0.595238, 38.0952, -38.0952, 0.595238, 38.0952, 38.0952, 0.595238, -38.0952, 38.0952, -0.595238, 38.0952)
+
+[sub_resource type="Environment" id="Environment_5rsxl"]
+background_mode = 1
+background_color = Color(0.411765, 0.756863, 0.909804, 1)
+
+[node name="WizardRoom" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_hsw3b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_we7bp")
+
+[node name="Player" parent="." instance=ExtResource("2_gi3r7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95933, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5rsxl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.99898, -0.0336216, 0.0301405, 0, 0.667508, 0.744603, -0.0451538, -0.743844, 0.666827, 0, 6, 0)
+light_color = Color(0.980392, 0.85098, 0.811765, 1)
+light_energy = 2.132
+light_indirect_energy = 1.49
+light_angular_distance = 90.0
+shadow_enabled = true

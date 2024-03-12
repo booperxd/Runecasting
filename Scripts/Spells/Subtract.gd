@@ -9,6 +9,7 @@ func _init():
 	spell_name = "Subtract"
 	cost = 0
 	variables = {"x" : "int", "y" : "int"}
+	unlocked_by_default = true
 
 func spell_effect():
 	if x != null and y != null:

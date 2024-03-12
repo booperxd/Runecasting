@@ -1,0 +1,70 @@
+{
+	"Math" : {
+		"Number" : {
+			"script_name" : "Number",
+			"spell_desc" : "Adds a number to the stack
+			\nEach line is equal to one number.
+			\nEx: --- is equal to 3, ----- is equal to 5",
+			"pattern" : ["r"]
+		},
+		"Add" : {
+			"script_name" : "Add",
+			"spell_desc" : "Removes two elements from the stack and adds the sum to the queue.",
+			"pattern" : ["l", "ddr", "ddl", "r"]
+		},
+		"Subtract" : {
+			"script_name" : "Subtract",
+			"spell_desc" : "Removes two elements from the stack and adds the difference to the queue.",
+			"pattern" : ["r", "dul", "ddl"]
+		},
+		"Multiply" : {
+			"script_name" : "Multiply",
+			"spell_desc" : "Removes two elements from the stack and adds the product to the queue.",
+			"pattern" : ["u", "r", "d"]
+		},
+		
+	}
+	,
+	"Scouting" : {
+		"Arcane Raycast" : {
+			"script_name" : "ArcaneRaycast",
+			"spell_desc" : "Shoots a raycast from the center of the entity's camera.
+			\nReturns the first entity or position of the raycast's collision.",
+			"pattern" : ["r", "r", "dul", "d", "dur"]
+		},
+		"Entity Position" : {
+			"script_name" : "EntityPosition",
+			"spell_desc" : "Returns the position of the entity inputted.",
+			"pattern" : ["r", "r", "ddr"]
+		},
+		"Entity Direction" : {
+			"script_name" : "EntityDirection",
+			"spell_desc" : "Returns the direction of the entity inputted.",
+			"pattern" : ["r", "r", "dur"]
+		}
+	},
+	"Stack Maniuplation" : {
+		"Flip" : {
+			"script_name" : "Flip",
+			"spell_desc" : "Flips the position of the top two elements in the stack",
+			"pattern" : ["r", "dul", "ddl", "ddl", "dul", "r"]
+		},
+		"Pop" : {
+			"script_name" : "PopStack",
+			"spell_desc" : "Pops the first element in the stack",
+			"pattern" : ["r", "ddr", "dur"]
+		}
+	},
+	"Conjuration" : {
+		"Summon Light" : {
+			"script_name" : "SummonLight",
+			"spell_desc" : "Summon a glowing, arcane light at the given position.",
+			"pattern" : ["dur", "dul", "l", "dur"]
+		},
+		"Summon Block" : {
+			"script_name" : "ArcaneBlock",
+			"spell_desc" : "Summon an arcane block at the given position.",
+			"pattern" : ["u", "r", "d", "l", "dur"]
+		}
+	}
+}

@@ -9,6 +9,7 @@ func _init():
 	spell_name = "Addition"
 	cost = 0
 	variables = {"light_pos" : "Vector3"}
+	unlocked_by_default = true
 
 func spell_effect():
 	if light_pos != null:

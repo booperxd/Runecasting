@@ -7,6 +7,7 @@ var entity
 func _init():
 	spell_name = "Entity Position"
 	cost = 0
+	unlocked_by_default = true
 	variables = {"entity" : "Entity"}
 
 func spell_effect():

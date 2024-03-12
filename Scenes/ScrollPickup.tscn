@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://5sqbs1fpgbtw"]
+
+[ext_resource type="Script" path="res://Scripts/ScrollPickup.gd" id="1_mnqp7"]
+[ext_resource type="PackedScene" uid="uid://of2x1npl7gsu" path="res://Models/Scroll.glb" id="1_veotn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_61hgl"]
+radius = 0.945409
+
+[node name="ScrollPickup" type="Node3D"]
+script = ExtResource("1_mnqp7")
+
+[node name="Scroll" parent="." instance=ExtResource("1_veotn")]
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_61hgl")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
