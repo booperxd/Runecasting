@@ -14,5 +14,9 @@ func stack_item_display() -> String:
 		return value.p.name
 	elif value is Vector3:
 		return str(value)
+	elif value is SpellStop and value.stopped:
+		return "Focusing..."
+	elif value is Array:
+		return str(value)
 	else:
 		return ""

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccqytdvewgntf"]
+[gd_scene load_steps=18 format=3 uid="uid://ccqytdvewgntf"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_h1lv3"]
 [ext_resource type="PackedScene" uid="uid://c4cqyi8wtrqxl" path="res://Scenes/RuneUI.tscn" id="2_qe5y1"]
@@ -9,8 +9,12 @@
 [ext_resource type="Script" path="res://Scripts/UI/ToastPanel.gd" id="4_dst2h"]
 [ext_resource type="PackedScene" uid="uid://bwxti633ig2ml" path="res://Scenes/notebook.tscn" id="5_xofl0"]
 [ext_resource type="PackedScene" uid="uid://0j5wlyiujxdb" path="res://Scenes/HealthComponent.tscn" id="7_7pafu"]
+[ext_resource type="PackedScene" uid="uid://cvvkjjqwg4fxp" path="res://Scenes/UI/pause_menu.tscn" id="7_nkche"]
+[ext_resource type="Script" path="res://Scripts/Player/Head.gd" id="7_wj62g"]
 [ext_resource type="PackedScene" uid="uid://5rg8wvhftb45" path="res://Scenes/HitboxComponent.tscn" id="8_68ofn"]
+[ext_resource type="PackedScene" uid="uid://dj6ck7jbimqxg" path="res://Scenes/CustomSpellBuilder.tscn" id="8_ig1ni"]
 [ext_resource type="Script" path="res://Scripts/UIManager.gd" id="10_eyvx5"]
+[ext_resource type="Script" path="res://Scripts/StackManager.gd" id="12_rkt06"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wiiv"]
 
@@ -30,15 +34,54 @@ shape = SubResource("CapsuleShape3D_8wiiv")
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+[node name="Entity" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_255ea")
 
-[node name="RuneUI" parent="Camera3D/CanvasLayer" instance=ExtResource("2_qe5y1")]
+[node name="HealthComponent" parent="Entity" instance=ExtResource("7_7pafu")]
+
+[node name="HitboxComponent" parent="Entity" node_paths=PackedStringArray("health_component") instance=ExtResource("8_68ofn")]
+collision_layer = 32
+collision_mask = 80
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entity/HitboxComponent"]
+shape = SubResource("CapsuleShape3D_s26wc")
+
+[node name="UIManager" type="Node3D" parent="." node_paths=PackedStringArray("rune_ui", "notes_ui", "pause_ui", "spell_builder_ui", "crosshair")]
+script = ExtResource("10_eyvx5")
+rune_ui = NodePath("../Head/Camera3D/CanvasLayer/RuneUI")
+notes_ui = NodePath("../Head/Camera3D/CanvasLayer/Notebook")
+pause_ui = NodePath("../Head/Camera3D/CanvasLayer/PauseMenu")
+spell_builder_ui = NodePath("../Head/Camera3D/CanvasLayer/CustomSpellBuilder")
+crosshair = NodePath("../Head/Camera3D/CanvasLayer/Crosshair")
+
+[node name="StackManager" type="Node" parent="."]
+script = ExtResource("12_rkt06")
+
+[node name="VoxelViewer" type="VoxelViewer" parent="."]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.66985, 0)
+script = ExtResource("7_wj62g")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Head/Camera3D"]
+
+[node name="CustomSpellBuilder" parent="Head/Camera3D/CanvasLayer" instance=ExtResource("8_ig1ni")]
 visible = false
 
-[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer"]
+[node name="PauseMenu" parent="Head/Camera3D/CanvasLayer" instance=ExtResource("7_nkche")]
+visible = false
+
+[node name="RuneUI" parent="Head/Camera3D/CanvasLayer" instance=ExtResource("2_qe5y1")]
+visible = false
+
+[node name="Crosshair" type="TextureRect" parent="Head/Camera3D/CanvasLayer"]
+z_index = -5
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -53,13 +96,13 @@ grow_vertical = 2
 texture = ExtResource("3_xgu8g")
 expand_mode = 1
 
-[node name="ToastPanel" type="Panel" parent="Camera3D/CanvasLayer"]
+[node name="ToastPanel" type="Panel" parent="Head/Camera3D/CanvasLayer"]
 visible = false
 offset_right = 400.0
 offset_bottom = 65.0
 script = ExtResource("4_dst2h")
 
-[node name="ToastText" type="RichTextLabel" parent="Camera3D/CanvasLayer/ToastPanel"]
+[node name="ToastText" type="RichTextLabel" parent="Head/Camera3D/CanvasLayer/ToastPanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
@@ -70,41 +113,23 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 
-[node name="Notebook" parent="Camera3D/CanvasLayer" instance=ExtResource("5_xofl0")]
+[node name="ToastTimer" type="Timer" parent="Head/Camera3D/CanvasLayer/ToastPanel"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Notebook" parent="Head/Camera3D/CanvasLayer" instance=ExtResource("5_xofl0")]
 visible = false
 
-[node name="Staff" parent="Camera3D" instance=ExtResource("3_th1h7")]
+[node name="Staff" parent="Head/Camera3D" instance=ExtResource("3_th1h7")]
 transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0.416038, -0.504535, -0.744313)
 
-[node name="Open Book" parent="Camera3D" instance=ExtResource("4_83bsa")]
+[node name="Open Book" parent="Head/Camera3D" instance=ExtResource("4_83bsa")]
 transform = Transform3D(1, 0, 0, 0, 0.920252, -0.391325, 0, 0.391325, 0.920252, 0, -0.523049, -1.00906)
 visible = false
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
-target_position = Vector3(0, 0, -30)
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -100)
 collision_mask = 5
 collide_with_areas = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-
-[node name="Entity" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("3_255ea")
-
-[node name="HealthComponent" parent="Entity" instance=ExtResource("7_7pafu")]
-
-[node name="HitboxComponent" parent="Entity" node_paths=PackedStringArray("hitbox_area", "health_component") instance=ExtResource("8_68ofn")]
-hitbox_area = NodePath("Area3D")
-health_component = NodePath("../HealthComponent")
-
-[node name="Area3D" type="Area3D" parent="Entity/HitboxComponent"]
-collision_layer = 32
-collision_mask = 64
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Entity/HitboxComponent/Area3D"]
-shape = SubResource("CapsuleShape3D_s26wc")
-
-[node name="UIManager" type="Node3D" parent="." node_paths=PackedStringArray("rune_ui", "notes_ui")]
-script = ExtResource("10_eyvx5")
-rune_ui = NodePath("../Camera3D/CanvasLayer/RuneUI")
-notes_ui = NodePath("../Camera3D/CanvasLayer/Notebook")
+[connection signal="timeout" from="Head/Camera3D/CanvasLayer/ToastPanel/ToastTimer" to="Head/Camera3D/CanvasLayer/ToastPanel" method="_on_toast_timer_timeout"]

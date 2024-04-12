@@ -9,6 +9,9 @@ func _init():
 	cost = 0
 	unlocked_by_default = true
 	variables = {"entity" : "Entity"}
+	pattern = ["r", "r", "ddr"]
+	description = "Returns the position of the entity inputted."
+	category = SpellCategory.Scouting
 
 func spell_effect():
 	if entity != null:

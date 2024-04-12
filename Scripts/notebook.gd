@@ -14,22 +14,23 @@ extends Control
 
 @onready var return_button = $ParentContainer/ReturnButton
 
-var spell_data
+var learned_spells : LearnedSpells
 var chapters : Array
-var current_spells : Dictionary
+var current_spells : Array
 
 var select_chapter : String
+var page : int
 
-var left_content : Dictionary
-var right_content : Dictionary
+var left_content : Spell
+var right_content : Spell
 
 func _ready():
-	var f = FileAccess.open("res://Scripts/Spells/spell_info.json", FileAccess.READ)
-	var content = f.get_as_text()
-	var json = JSON.new()
-	spell_data = json.parse_string(content)
+	await(owner.ready)
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	learned_spells = Global.player.player_spells
 	left_parent.visible = false
-	for category in spell_data:
+	
+	for category in Spell.SpellCategory:
 		chapters.append(category)
 		var chapter_button = Button.new()
 		chapter_button.text = category
@@ -42,21 +43,16 @@ func _ready():
 	#set_left_content(left_content)
 	#set_right_content(right_content)
 
-func set_left_content(spell : Dictionary):
-	if spell.has("script_name"):
-		left_title.text = spell["script_name"]
-	if spell.has("pattern"):
-		left_pattern.text =  str(spell["pattern"])
-	if spell.has("spell_desc"):
-		left_desc.text = spell["spell_desc"]
+func set_left_content(spell : Spell):
+	left_title.text = spell.spell_name
+	left_pattern.text =  str(spell.pattern)
+	left_desc.text = spell.description
 	
-func set_right_content(spell : Dictionary):
-	if spell.has("script_name"):
-		right_title.text = spell["script_name"]
-	if spell.has("pattern"):
-		right_pattern.text =  str(spell["pattern"])
-	if spell.has("spell_desc"):
-		right_desc.text = spell["spell_desc"]
+func set_right_content(spell : Spell):
+	right_title.text = spell.spell_name
+	right_pattern.text =  str(spell.pattern)
+	right_desc.text = spell.description
+
 
 func clear_right_content():
 	right_title.text = ''
@@ -67,21 +63,45 @@ func clear_right_content():
 func on_chapter_select(chapter : String):
 	current_spells.clear()
 	select_chapter = chapter
-	for spell in spell_data[chapter]:
-			current_spells[spell] = (spell_data[chapter][spell])
-	left_content = current_spells[current_spells.keys()[0]]
-	right_content = current_spells[current_spells.keys()[1]]
+	for spell in learned_spells.spells:
+		if chapter == Spell.SpellCategory.keys()[spell.category]:
+			current_spells.append(spell)
+	left_content = current_spells[0]
+	if current_spells.size() != 1:
+		right_content = current_spells[1]
+	page = 1
 	set_left_content(left_content)
-	set_right_content(right_content)
+	if current_spells.size() != 1:
+		set_right_content(right_content)
 	left_parent.visible = true
 	chapter_parent.visible = false
 
 func _on_back_pressed():
-	pass # Replace with function body.
+	if page == 1:
+		return
+	page -= 2
+	left_content = current_spells[page - 1]
+	set_left_content(left_content)
+	if (page < current_spells.size()):
+		right_content = current_spells[page]
+		set_right_content(right_content)
+	else:
+		clear_right_content()
 
 
 func _on_next_pressed():
-	pass # Replace with function body.
+	if (page + 1 >= current_spells.size()):
+		return
+	page += 2
+	left_content = current_spells[page - 1]
+	set_left_content(left_content)
+	if (page < current_spells.size()):
+		right_content = current_spells[page]
+		set_right_content(right_content)
+	else:
+		clear_right_content()
+	
+	
 
 
 func _on_return_button_pressed():

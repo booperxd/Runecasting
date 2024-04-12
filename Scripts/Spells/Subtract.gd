@@ -10,6 +10,9 @@ func _init():
 	cost = 0
 	variables = {"x" : "int", "y" : "int"}
 	unlocked_by_default = true
+	pattern = ["r", "dul", "ddl"]
+	description = "Removes two elements from the stack and adds the difference to the queue."
+	category = SpellCategory.Math
 
 func spell_effect():
 	if x != null and y != null:

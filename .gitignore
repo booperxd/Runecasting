@@ -1,2 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
+User
+TerrainData/
+Scenes/SickTerrain
+Scenes/starting_island.tres

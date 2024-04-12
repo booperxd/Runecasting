@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://cesc5wftsn03b"]
+
+[ext_resource type="Texture2D" uid="uid://dr064cc63pclr" path="res://Textures/SpellParticles/smoke_1.png" id="1_h40w6"]
+[ext_resource type="Script" path="res://Scripts/SpellPrefabs/Explosion.gd" id="1_wl01n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5hrgk"]
+radius = 2.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_114vj"]
+transparency = 1
+albedo_texture = ExtResource("1_h40w6")
+rim = 0.65
+billboard_mode = 1
+
+[sub_resource type="Curve" id="Curve_6tami"]
+min_value = -200.0
+max_value = 0.0
+_data = [Vector2(0.0115274, 107.368), 0.0, 0.0, 0, 0, Vector2(0.0864553, -4.21053), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_c3qw8"]
+curve = SubResource("Curve_6tami")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nik5f"]
+emission_shape = 1
+emission_sphere_radius = 3.0
+gravity = Vector3(1, 2, 0)
+radial_accel_max = 2.0
+radial_accel_curve = SubResource("CurveTexture_c3qw8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_y7lti"]
+
+[node name="Explosion" type="Area3D"]
+collision_layer = 8
+collision_mask = 48
+script = ExtResource("1_wl01n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5hrgk")
+
+[node name="SmokeParticles" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_114vj")
+amount = 25
+lifetime = 2.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_nik5f")
+draw_pass_1 = SubResource("QuadMesh_y7lti")
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]

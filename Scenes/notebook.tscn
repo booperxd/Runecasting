@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwxti633ig2ml"]
+[gd_scene load_steps=4 format=3 uid="uid://bwxti633ig2ml"]
 
 [ext_resource type="Script" path="res://Scripts/notebook.gd" id="1_c0de2"]
 [ext_resource type="Texture2D" uid="uid://c23u4fcpw8f2f" path="res://Textures/UI/BookPage.png" id="1_utpxo"]
+
+[sub_resource type="Theme" id="Theme_rcbqs"]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(1, 1, 1, 0)
 
 [node name="Notebook" type="Control"]
 layout_mode = 3
@@ -10,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_rcbqs")
 script = ExtResource("1_c0de2")
 
 [node name="ParentContainer" type="VBoxContainer" parent="."]
@@ -105,18 +110,15 @@ grow_vertical = 2
 
 [node name="Title" type="Label" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
 layout_mode = 2
-text = "<Title>"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Pattern" type="Label" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
 layout_mode = 2
-text = "<Pattern>"
 autowrap_mode = 2
 
 [node name="Description" type="Label" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]
 layout_mode = 2
-text = "<Description>"
 autowrap_mode = 2
 
 [node name="Container" type="Container" parent="ParentContainer/HBoxContainer/RightPage/PageContainer"]

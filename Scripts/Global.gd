@@ -4,10 +4,23 @@ signal current_star(position)
 signal player_learn_spell(spell)
 signal stack_changed(stack)
 signal open_toast(text)
+signal spell_finished(current_pattern)
+signal interactable_near(type : Interactables)
+
+signal custom_spell_added(custom_spell)
+signal channel_finished(patterns)
 
 var current_scene
+var player : Player
+var player_settings : PlayerSettings
 
-var player_spells := LearnedSpells.new()
+enum Interactables {
+	None,
+	StudyTable
+}
+
+func _ready():
+	player_settings = PlayerSettings.load_or_create()
 
 func check_if_all_dups(array : Array):
 	var dict : Dictionary
@@ -16,3 +29,5 @@ func check_if_all_dups(array : Array):
 	if dict.size() == 1:
 		return true
 	return false
+
+

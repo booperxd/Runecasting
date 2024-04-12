@@ -9,11 +9,11 @@ var current_pattern : Array
 var line = Line2D
 var line_inst
 
-@onready var stack_manager : StackManager = $StackManager
 @onready var stack_display = $HBoxContainer/StackDisplay/StackContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	Global.current_star.connect(at_star)
 	Global.stack_changed.connect(update_stack_display)
 
@@ -33,7 +33,7 @@ func _process(delta):
 			elif next_star != Vector2.ZERO and not next_star_used:
 				line_inst.points[line_inst.points.size() - 1] = next_star
 				line_inst.add_point(next_star)
-				current_pattern.append(stack_manager.get_pattern_direction(line_inst.points[line_inst.points.size() - 3], line_inst.points[line_inst.points.size() - 2]))
+				current_pattern.append(get_pattern_direction(line_inst.points[line_inst.points.size() - 3], line_inst.points[line_inst.points.size() - 2]))
 				next_star = Vector2.ZERO
 				next_star_used = true
 			#print(line_inst.points.size())
@@ -44,7 +44,7 @@ func _process(delta):
 				line_inst.queue_free()
 		if Input.is_action_just_released("select_star"):
 			hovering_star = Vector2.ZERO
-			stack_manager.process_spell(current_pattern)
+			Global.spell_finished.emit(current_pattern)
 			current_pattern.clear()
 
 func at_star(star_pos):
@@ -61,3 +61,28 @@ func update_stack_display(stack):
 		var label = Label.new()
 		label.text = s_i.stack_item_display()
 		stack_display.add_child(label)
+
+func get_pattern_direction(o : Vector2, d : Vector2):
+	if o.x == d.x:
+		if d.y < o.y:
+			return "u"
+		else:
+			return "d"
+	if o.y == d.y:
+		if d.x > o.x:
+			return "r"
+		else:
+			return "l"
+	#diag up
+	elif d.y < o.y:
+		if d.x > o.x:
+			return "dur"
+		else:
+			return "dul"
+	elif d.y > o.y:
+		if d.x > o.x:
+			return "ddr"
+		else:
+			return "ddl"
+	else:
+		return "?"

@@ -26,6 +26,11 @@
 	}
 	,
 	"Scouting" : {
+		"Self Reference" : {
+			"script_name" : "SelfReference",
+			"spell_desc" : "Adds a reference to the player to the stack.",
+			"pattern" : ["dur", "dul", "ddl", "ddr"]
+		},
 		"Arcane Raycast" : {
 			"script_name" : "ArcaneRaycast",
 			"spell_desc" : "Shoots a raycast from the center of the entity's camera.

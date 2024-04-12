@@ -1,0 +1,112 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvvkjjqwg4fxp"]
+
+[ext_resource type="Script" path="res://Scripts/UI/PauseMenu.gd" id="1_qunti"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qunti")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_right = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Settings
+"
+
+[node name="QuitButton" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Save and Quit"
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.7
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="SensitivityContainer" type="HBoxContainer" parent="Panel/SettingsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/SettingsContainer/SensitivityContainer"]
+layout_mode = 2
+text = "Sensitivity"
+
+[node name="SensSlider" type="HSlider" parent="Panel/SettingsContainer/SensitivityContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.001
+max_value = 0.1
+step = 0.001
+value = 0.001
+
+[node name="BobAmpContainer" type="HBoxContainer" parent="Panel/SettingsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/SettingsContainer/BobAmpContainer"]
+layout_mode = 2
+text = "Bob Amplifier
+"
+
+[node name="BobSlider" type="HSlider" parent="Panel/SettingsContainer/BobAmpContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 0.2
+step = 0.01
+value = 0.08
+
+[node name="Spacer" type="Container" parent="Panel/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/SettingsContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="Panel/SettingsContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Cancel"
+
+[node name="SaveButton" type="Button" parent="Panel/SettingsContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Save"
+
+[connection signal="pressed" from="ButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="value_changed" from="Panel/SettingsContainer/SensitivityContainer/SensSlider" to="." method="_on_sens_slider_value_changed"]
+[connection signal="value_changed" from="Panel/SettingsContainer/BobAmpContainer/BobSlider" to="." method="_on_bob_slider_value_changed"]
+[connection signal="pressed" from="Panel/SettingsContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="Panel/SettingsContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]

@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2tkq7p2e4dcb"]
+[gd_scene load_steps=9 format=3 uid="uid://d2tkq7p2e4dcb"]
 
 [ext_resource type="Texture2D" uid="uid://cmfkyjojyi6rf" path="res://Textures/Prototype/PNG/Dark/texture_08.png" id="1_sgua8"]
 [ext_resource type="PackedScene" uid="uid://ccqytdvewgntf" path="res://Scenes/Player.tscn" id="2_gi3r7"]
+[ext_resource type="PackedScene" uid="uid://b2c5s4abdev47" path="res://Scenes/Goblin.tscn" id="3_1krjy"]
+[ext_resource type="PackedScene" uid="uid://c7ggggbdw6ivc" path="res://Scenes/study_table.tscn" id="4_vmfe1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e8y0m"]
 albedo_texture = ExtResource("1_sgua8")
@@ -14,9 +16,11 @@ size = Vector2(75, 75)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_we7bp"]
 points = PackedVector3Array(38.0952, 0.595238, 38.0952, -38.0952, -0.595238, -38.0952, -38.0952, 0.595238, -38.0952, 38.0952, -0.595238, -38.0952, -38.0952, -0.595238, 38.0952, -38.0952, 0.595238, 38.0952, 38.0952, 0.595238, -38.0952, 38.0952, -0.595238, 38.0952)
 
-[sub_resource type="Environment" id="Environment_5rsxl"]
+[sub_resource type="Environment" id="Environment_gagn0"]
 background_mode = 1
 background_color = Color(0.411765, 0.756863, 0.909804, 1)
+background_energy_multiplier = 0.59
+ambient_light_energy = 0.79
 
 [node name="WizardRoom" type="Node3D"]
 
@@ -31,13 +35,19 @@ shape = SubResource("ConvexPolygonShape3D_we7bp")
 [node name="Player" parent="." instance=ExtResource("2_gi3r7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95933, 0)
 
+[node name="Goblin" parent="." instance=ExtResource("3_1krjy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7238, 0.0100743, -10.3672)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_5rsxl")
+environment = SubResource("Environment_gagn0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.99898, -0.0336216, 0.0301405, 0, 0.667508, 0.744603, -0.0451538, -0.743844, 0.666827, 0, 6, 0)
-light_color = Color(0.980392, 0.85098, 0.811765, 1)
-light_energy = 2.132
+transform = Transform3D(1, 0, 0, 0, -0.719909, 0.694068, 0, -0.694068, -0.719909, 0, 6, 0)
+light_color = Color(0.984314, 0.894118, 0.866667, 1)
+light_energy = 1.982
 light_indirect_energy = 1.49
 light_angular_distance = 90.0
 shadow_enabled = true
+
+[node name="StudyTable" parent="." instance=ExtResource("4_vmfe1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.713069, 0.595238, -4.73606)

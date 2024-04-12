@@ -2,59 +2,93 @@ class_name StackManager
 
 extends Node
 
-const SPELL_PATH = "res://Scripts/Spells/"
 var stack : Array
-var spell_data : Dictionary
+var learned_spells
+
+var is_channelling : bool
 
 func _ready():
-	var f = FileAccess.open("res://Scripts/Spells/spell_info.json", FileAccess.READ)
-	var content = f.get_as_text()
-	var json = JSON.new()
-	spell_data = json.parse_string(content)
+	learned_spells = owner.player_spells
+	Global.spell_finished.connect(process_spell)
 
 func find_spell(pattern : Array):
-	var spell = null
-	for category in spell_data:
-		for s in spell_data[category]:
-			var s_pattern = spell_data[category][s]["pattern"]
-			var s_name = spell_data[category][s]["script_name"]
-			if Global.check_if_all_dups(pattern) and pattern[0] == s_pattern[0] and Global.check_if_all_dups(s_pattern):
-				spell = load(SPELL_PATH + s_name + ".gd").new()
+	for spell in learned_spells.spells:
+		if spell is Spell:
+			if spell.pattern.size() == 0:
+				continue
+			if Global.check_if_all_dups(pattern) and pattern[0] == spell.pattern[0] and Global.check_if_all_dups(spell.pattern):
 				if spell.variables.is_empty():
 					if spell is Number:
 						spell.number = pattern.size()
-				if Global.player_spells.check_if_player_knows_spell(spell):
-					return spell
-				else:
-					print('player does not know spell!!')
-			if pattern == s_pattern:
-				spell = load(SPELL_PATH + s_name + ".gd").new()
+						return spell
+			if pattern == spell.pattern:
 				if spell.variables.is_empty():
 					if spell is SelfReference:
 						#this sucks, get rid of this
-						spell.entity = owner.owner.get_node("Entity")
-				elif not spell.variables.is_empty():
+						spell.entity = Global.player.get_node("Entity")
+				elif not spell.variables.is_empty() and not is_channelling:
 					var dict = {}
 					for v in spell.variables:
 						dict[v] = pop_stack()
 					spell.handle_variables(dict)
-				if Global.player_spells.check_if_player_knows_spell(spell):
-					return spell
-				else:
-					Global.open_toast.emit("The magic from your staff fizzles... that spell is unknown.")
+				return spell
+				#if Global.player_spells.check_if_player_knows_spell(spell):
+				#	return spell
+				#else:
+				#	Global.open_toast.emit("The magic from your staff fizzles... that spell is unknown.")
 		
 	return null
-
-func process_spell(pattern : Array):
-	var s = find_spell(pattern)
-	if s == null:
-		return null
+	
+func process_custom_spell(pattern : Array):
 	var results_array = []
-	results_array = await s.spell_effect()
+	var spell : Spell = find_spell(pattern)
+	if spell == null:
+		pass
+	results_array = await spell.spell_effect().duplicate()
+	if spell is Spell:
+		spell.returns.clear()
+		
 	for r in results_array:
 		var s_i = r
 		if s_i != null:
 			push_stack(s_i)
+
+func process_spell(pattern):
+	var s = find_spell(pattern)
+	if s == null:
+		return null
+	Global.open_toast.emit("Casted " + s.spell_name)
+	var results_array = []
+	if s is Channel:
+		is_channelling = !is_channelling
+		if !is_channelling:
+			condense_patterns()
+		Global.stack_changed.emit(stack)
+	else:
+		if is_channelling:
+			push_stack(StackItem.new(pattern.duplicate()))
+		else:
+			results_array = await s.spell_effect().duplicate()
+			if s is Spell:
+				s.returns.clear()
+			for r in results_array:
+				var s_i = r
+				if s_i != null and not is_channelling:
+					
+					push_stack(s_i)
+
+func condense_patterns():
+	var spells : Array
+	for stack_item in stack:
+		if stack_item.value is Array:
+			spells.append(stack_item.value)
+	for i in range(stack.size()-1, -1, -1):
+		if stack[i].value is Array:
+			stack.remove_at(i)
+	var pattern_sequence : StackItem = StackItem.new(spells)
+	Global.channel_finished.emit(pattern_sequence.value)
+	if spells.size() > 0:
+		push_stack(pattern_sequence)
 
 func push_stack(stack_item):
 	stack.append(stack_item)
@@ -65,27 +99,4 @@ func pop_stack():
 	Global.stack_changed.emit(stack)
 	return temp
 
-func get_pattern_direction(o : Vector2, d : Vector2):
-	if o.x == d.x:
-		if d.y < o.y:
-			return "u"
-		else:
-			return "d"
-	if o.y == d.y:
-		if d.x > o.x:
-			return "r"
-		else:
-			return "l"
-	#diag up
-	elif d.y < o.y:
-		if d.x > o.x:
-			return "dur"
-		else:
-			return "dul"
-	elif d.y > o.y:
-		if d.x > o.x:
-			return "ddr"
-		else:
-			return "ddl"
-	else:
-		return "?"
+
