@@ -28,8 +28,7 @@ func _on_area_entered(area):
 	selfdestruct_timer.stop()
 	if area is HitboxComponent:
 		var hitbox : HitboxComponent = area
-		var attack : Attack = Attack.new()
-		attack.damage = 5
+		var attack : Attack = Attack.new(5)
 		hitbox.damage(attack)
 
 

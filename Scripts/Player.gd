@@ -3,7 +3,8 @@ class_name Player
 extends CharacterBody3D
 
 const SPEED = 5.0
-const JUMP_VELOCITY = 6.5
+const JUMP_VELOCITY = 3.5
+const LADDER_VELOCITY = 2.5
 const FRICTION = 25
 const HORIZONTAL_ACCELERATION = 30
 const MAX_SPEED=5
@@ -13,8 +14,9 @@ var t_bob :float = .8
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-var player_spells = LearnedSpells.new()
+var player_spells : LearnedSpells
 
+var was_on_floor : bool = false
 var max_jumps : int = 1
 var remaining_jumps : int
 
@@ -24,13 +26,18 @@ var player_settings : PlayerSettings
 @onready var raycast = $Head/Camera3D/RayCast3D
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
-@onready var rune_ui = $Head/Camera3D/CanvasLayer/RuneUI
+@onready var rune_ui = $Head/Camera3D/CanvasLayer/Menus/RuneUI
 @onready var stack_manager : StackManager = $StackManager
+
+var on_ladder : bool = false
 
 func _ready():
 	Global.player = self
 	Global.current_scene = get_tree().get_current_scene()
 	Global.custom_spell_added.connect(on_custom_spell_added)
+	player_spells = LearnedSpells.load_or_create()
+	for custom_spell in player_spells.custom_spells:
+		Global.custom_spell_added.emit(player_spells.custom_spells[custom_spell], custom_spell)
 	player_settings = Global.player_settings
 	Input.mouse_mode=Input.MOUSE_MODE_CAPTURED
 	
@@ -50,14 +57,27 @@ func _physics_process(delta):
 		remaining_jumps = max_jumps
 	
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and Input.mouse_mode==Input.MOUSE_MODE_CAPTURED:
+	if Input.is_action_just_pressed("ui_accept") and not on_ladder and is_on_floor() and Input.mouse_mode==Input.MOUSE_MODE_CAPTURED:
 		velocity.y = JUMP_VELOCITY
-		
-	if Input.is_action_just_pressed("spell_1") and player_spells.custom_spell != null:
+	
+	if Input.is_action_pressed("ui_accept") and on_ladder:
+		velocity.y = LADDER_VELOCITY
+	
+	if Input.is_action_just_pressed("spell_1") and player_spells.custom_spells.has(1):
 		stack_manager.stack.clear()
-		for spell in player_spells.custom_spell.spells:
+		Global.open_toast.emit("Casted " + player_spells.custom_spells.get(1).spell_name)
+		for spell in player_spells.custom_spells.get(1).spells:
 			stack_manager.process_custom_spell(spell)
-		
+	if Input.is_action_just_pressed("spell_2") and player_spells.custom_spells.has(2):
+		stack_manager.stack.clear()
+		Global.open_toast.emit("Casted " + player_spells.custom_spells.get(2).spell_name)
+		for spell in player_spells.custom_spells.get(2).spells:
+			stack_manager.process_custom_spell(spell)
+	if Input.is_action_just_pressed("spell_3") and player_spells.custom_spells.has(3):
+		stack_manager.stack.clear()
+		Global.open_toast.emit("Casted " + player_spells.custom_spells.get(3).spell_name)
+		for spell in player_spells.custom_spells.get(3).spells:
+			stack_manager.process_custom_spell(spell)
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Vector3.ZERO
@@ -80,7 +100,22 @@ func _physics_process(delta):
 	t_bob += delta * velocity.length() * float(is_on_floor())
 	camera.transform.origin = headbob()
 	move_and_slide()
+	#snap_to_stairs()
 	#force_update_transform()
+
+
+#func snap_to_stairs():
+#	if not is_on_floor() and velocity.y <= 0 and was_on_floor:
+#		var body_test = PhysicsTestMotionResult3D.new()
+#		var params = PhysicsTestMotionParameters3D.new()
+#		var max_step_down = -1.2
+#		params.from = self.global_transform
+#		params.motion = Vector3(0, max_step_down, 0)
+#		if (PhysicsServer3D.body_test_motion(self.get_rid(), params, body_test)):
+#			var translate = body_test.get_travel().y
+#			position.y += translate
+#			apply_floor_snap()
+#	was_on_floor = is_on_floor()
 
 func headbob():
 	var pos : Vector3 = Vector3.ZERO
@@ -88,5 +123,5 @@ func headbob():
 	pos.x = cos(t_bob * BOB_FREQ / 2) * player_settings.bob_amp
 	return pos
 	
-func on_custom_spell_added(custom_spell):
-	player_spells.add_custom_spell(custom_spell)
+func on_custom_spell_added(custom_spell, page):
+	player_spells.add_custom_spell(custom_spell, page)

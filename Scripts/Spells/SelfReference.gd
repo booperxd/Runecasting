@@ -2,7 +2,7 @@ class_name SelfReference
 
 extends Spell
 
-var entity
+var Being
 
 func _init():
 	spell_name = "Self Reference"
@@ -13,5 +13,5 @@ func _init():
 	category = SpellCategory.Scouting
 
 func spell_effect():
-	returns.append(StackItem.new(entity))
+	returns.append(StackItem.new(Being))
 	return returns

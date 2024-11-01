@@ -7,7 +7,7 @@ var spells : Array
 func _init():
 	var script_names = get_all_spell_scripts("res://Scripts/Spells/")
 	for script in script_names:
-		var path = "res://Scripts/Spells/" + script
+		var path = script
 		spells.append(ResourceLoader.load(path).new())
 
 func get_all_spell_scripts(path: String) -> Array[String]:  
@@ -20,6 +20,6 @@ func get_all_spell_scripts(path: String) -> Array[String]:
 		if dir.current_is_dir():  
 			file_paths += get_all_spell_scripts(file_path)  
 		elif '.gd' in file_name:  
-			file_paths.append(file_name)  
+			file_paths.append(file_path)  
 		file_name = dir.get_next()  
 	return file_paths

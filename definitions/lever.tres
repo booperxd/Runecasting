@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=3 format=3 uid="uid://bf2w6p6erl5g0"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_ngryv"]
+[ext_resource type="PackedScene" uid="uid://b5egpyynhkwe2" path="res://Scenes/Interactables/Lever.tscn" id="1_t8ehm"]
+
+[resource]
+script = ExtResource("1_ngryv")
+scene_file = ExtResource("1_t8ehm")
+apply_rotation_on_map_build = true
+classname = "lever"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"target": &""
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false

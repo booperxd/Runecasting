@@ -1,13 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://ctt7csje35vir"]
+[gd_scene load_steps=27 format=3 uid="uid://ctt7csje35vir"]
 
 [ext_resource type="Shader" uid="uid://c3hevrylki33h" path="res://gridmaterial.tres" id="1_endto"]
 [ext_resource type="PackedScene" uid="uid://ccqytdvewgntf" path="res://Scenes/Player.tscn" id="3_rrnaf"]
 [ext_resource type="Shader" uid="uid://dvyiskaecbtgg" path="res://Scenes/test.tres" id="5_arlf5"]
-[ext_resource type="VoxelGeneratorGraph" uid="uid://bamwaplf0krjy" path="res://Scenes/SickTerrain/VoxelSettings/voxel_pluging_test.tres" id="5_hius3"]
 [ext_resource type="PackedScene" uid="uid://5sqbs1fpgbtw" path="res://Scenes/ScrollPickup.tscn" id="5_uep17"]
-[ext_resource type="VoxelMesherTransvoxel" uid="uid://bw33d1w7axdqj" path="res://Scenes/SickTerrain/VoxelSettings/voxel_mesher_test.tres" id="6_f8wfd"]
 [ext_resource type="Script" path="res://Scripts/Spells/MoveEntity.gd" id="6_t3j63"]
-[ext_resource type="Texture2D" uid="uid://cnpjqoq3guhxh" path="res://Textures/Prototype/PNG/Dark/texture_02.png" id="8_js0sh"]
+[ext_resource type="Texture2D" uid="uid://cnpjqoq3guhxh" path="res://textures/Prototype/PNG/Dark/texture_02.png" id="8_js0sh"]
 [ext_resource type="PackedScene" uid="uid://c7ggggbdw6ivc" path="res://Scenes/study_table.tscn" id="9_iwp36"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vd2np"]
@@ -56,10 +54,6 @@ size = Vector3(3, 0.5, 3)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dg7ms"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="VoxelStreamRegionFiles" id="VoxelStreamRegionFiles_putj6"]
-save_generator_output = true
-directory = "res://TerrainData"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jcvge"]
 render_priority = 0
 shader = ExtResource("5_arlf5")
@@ -69,13 +63,13 @@ sky_top_color = Color(0.262745, 0.533333, 0.796078, 1)
 sky_horizon_color = Color(0.647059, 0.654902, 0.670588, 1)
 ground_bottom_color = Color(0.184314, 0.356863, 0.572549, 1)
 
-[sub_resource type="Sky" id="Sky_xkdq7"]
+[sub_resource type="Sky" id="Sky_h236x"]
 sky_material = SubResource("ProceduralSkyMaterial_voi21")
 
 [sub_resource type="Environment" id="Environment_euu13"]
 background_mode = 2
 background_color = Color(0.317647, 0.521569, 1, 1)
-sky = SubResource("Sky_xkdq7")
+sky = SubResource("Sky_h236x")
 tonemap_mode = 2
 tonemap_white = 6.0
 sdfgi_enabled = true
@@ -261,15 +255,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.36338, 2.65965, 3.85437)
 spell_script = ExtResource("6_t3j63")
 
 [node name="Player" parent="." instance=ExtResource("3_rrnaf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.6642, 17.2939, -92.712)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.7202, 22.2939, -92.712)
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
-stream = SubResource("VoxelStreamRegionFiles_putj6")
-generator = ExtResource("5_hius3")
-mesher = ExtResource("6_f8wfd")
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
 bounds = AABB(-512, -512, -512, 1024, 1024, 1024)
 max_view_distance = 186
 material_override = SubResource("ShaderMaterial_jcvge")
+script = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_euu13")
@@ -282,10 +281,10 @@ shadow_enabled = true
 directional_shadow_blend_splits = true
 
 [node name="StudyTable" parent="." instance=ExtResource("9_iwp36")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -46.9392, 16.6184, -103.071)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -46.9392, 18.3888, -103.071)
 
 [node name="Test Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -46.9392, 16.1312, -95.071)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -46.9392, 17.9016, -95.071)
 material_override = SubResource("StandardMaterial3D_wp1e2")
 mesh = SubResource("PlaneMesh_bk1k0")
 

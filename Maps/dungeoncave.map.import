@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://bme1hpy3hivk2"
+path="res://.godot/imported/dungeoncave.map-bb6ba467cafa2d07d315aaf8bcfc8f4f.tres"
+
+[deps]
+
+source_file="res://Maps/dungeoncave.map"
+dest_files=["res://.godot/imported/dungeoncave.map-bb6ba467cafa2d07d315aaf8bcfc8f4f.tres"]
+
+[params]
+

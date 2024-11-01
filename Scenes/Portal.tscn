@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://de4j1pxs1xte7"]
+
+[ext_resource type="Script" path="res://Scripts/Portal.gd" id="1_q3xhi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_61pdv"]
+albedo_color = Color(1, 0.243137, 0.976471, 1)
+rim_enabled = true
+rim_tint = 0.56
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_faf41"]
+size = Vector2(3, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kj5eq"]
+size = Vector3(4, 5, 3)
+
+[node name="Portal" type="Area3D"]
+collision_layer = 128
+collision_mask = 2
+script = ExtResource("1_q3xhi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_61pdv")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_faf41")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.45245)
+shape = SubResource("BoxShape3D_kj5eq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

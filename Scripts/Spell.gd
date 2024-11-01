@@ -8,7 +8,9 @@ enum SpellCategory {
 	Scouting,
 	Stack,
 	Conjuration,
-	Projectile
+	Projectile,
+	Effects,
+	Elements
 }
 
 var spell_name : String
@@ -27,3 +29,4 @@ func handle_variables(passed_variables : Dictionary):
 	for v in passed_variables:
 		if variables[v] != null:
 			set(v, passed_variables[v]) 
+	

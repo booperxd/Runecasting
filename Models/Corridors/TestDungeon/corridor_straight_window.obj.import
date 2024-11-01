@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ciuiv1d2aof2m"
+path="res://.godot/imported/corridor_straight_window.obj-87901ddb9bad031e4c3905b24e352c6c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/corridor_straight_window.obj-87901ddb9bad031e4c3905b24e352c6c.mesh"]
+
+source_file="res://Models/Corridors/TestDungeon/corridor_straight_window.obj"
+dest_files=["res://.godot/imported/corridor_straight_window.obj-87901ddb9bad031e4c3905b24e352c6c.mesh", "res://.godot/imported/corridor_straight_window.obj-87901ddb9bad031e4c3905b24e352c6c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

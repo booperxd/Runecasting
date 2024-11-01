@@ -1,19 +1,19 @@
-class_name EntityPosition
+class_name BeingPosition
 
 extends Spell
 
-var entity
+var being
 
 func _init():
-	spell_name = "Entity Position"
+	spell_name = "Being Position"
 	cost = 0
 	unlocked_by_default = true
-	variables = {"entity" : "Entity"}
+	variables = {"being" : "Being"}
 	pattern = ["r", "r", "ddr"]
-	description = "Returns the position of the entity inputted."
+	description = "Returns the position of the being inputted."
 	category = SpellCategory.Scouting
 
 func spell_effect():
-	if entity != null:
-		returns.append(StackItem.new(entity.value.get_global_position()))
+	if being != null:
+		returns.append(StackItem.new(being.value.get_global_position()))
 	return returns 

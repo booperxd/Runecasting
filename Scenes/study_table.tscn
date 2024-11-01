@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7ggggbdw6ivc"]
 
 [ext_resource type="Script" path="res://Scripts/StudyTable.gd" id="1_kya1g"]
-[ext_resource type="Texture2D" uid="uid://ch1adleeduov1" path="res://Textures/Prototype/study_table.png" id="2_25s4d"]
+[ext_resource type="Texture2D" uid="uid://ch1adleeduov1" path="res://textures/Prototype/study_table.png" id="2_25s4d"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bgcxc"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)

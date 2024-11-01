@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://clr48ebu5mqh4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i00aq"]
+albedo_color = Color(0.509804, 0.301961, 0.109804, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5s1rw"]
+size = Vector3(0.3, 1, 0.3)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vs2aw"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+gravity = Vector3(0, 2, 0)
+linear_accel_min = 1.12
+linear_accel_max = 2.24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8u38b"]
+shading_mode = 0
+albedo_color = Color(0.862745, 0.32549, 0.0705882, 1)
+disable_receive_shadows = true
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_koelc"]
+material = SubResource("StandardMaterial3D_8u38b")
+size = Vector2(0.2, 0.2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ifq8l"]
+gravity = Vector3(0, 1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lfkca"]
+shading_mode = 0
+albedo_color = Color(1, 0.835294, 0.254902, 1)
+disable_receive_shadows = true
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_6rgt6"]
+material = SubResource("StandardMaterial3D_lfkca")
+size = Vector2(0.2, 0.2)
+
+[node name="Torch" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_i00aq")
+mesh = SubResource("BoxMesh_5s1rw")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.919474, 0)
+light_color = Color(0.635294, 0.270588, 0.0196078, 1)
+light_energy = 3.116
+shadow_enabled = true
+omni_range = 15.024
+
+[node name="OrangeFlames" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.615663, 0)
+cast_shadow = 0
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_vs2aw")
+draw_pass_1 = SubResource("QuadMesh_koelc")
+
+[node name="YellowFlames" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.615663, 0)
+cast_shadow = 0
+process_material = SubResource("ParticleProcessMaterial_ifq8l")
+draw_pass_1 = SubResource("QuadMesh_6rgt6")

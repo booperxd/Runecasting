@@ -1,19 +1,19 @@
-class_name EntityDirection
+class_name BeingDirection
 
 extends Spell
 
-var entity
+var being
 
 func _init():
-	spell_name = "Entity Direction"
+	spell_name = "Being Direction"
 	cost = 0
 	unlocked_by_default = true
-	variables = {"entity" : "Entity"}
+	variables = {"being" : "Being"}
 	pattern = ["r", "r", "dur"]
-	description = "Returns the direction of the entity inputted."
+	description = "Returns the direction of the Being inputted."
 	category = SpellCategory.Scouting
 
 func spell_effect():
-	if entity != null:
-		returns.append(StackItem.new(entity.value.head.get_node("Camera3D").get_global_transform().basis.z * -1))
+	if being != null:
+		returns.append(StackItem.new(being.value.head.get_node("Camera3D").get_global_transform().basis.z * -1))
 	return returns 

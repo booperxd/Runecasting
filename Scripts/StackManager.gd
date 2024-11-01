@@ -8,6 +8,7 @@ var learned_spells
 var is_channelling : bool
 
 func _ready():
+	await(owner.ready)
 	learned_spells = owner.player_spells
 	Global.spell_finished.connect(process_spell)
 
@@ -25,7 +26,7 @@ func find_spell(pattern : Array):
 				if spell.variables.is_empty():
 					if spell is SelfReference:
 						#this sucks, get rid of this
-						spell.entity = Global.player.get_node("Entity")
+						spell.Being = Global.player.get_node("Being")
 				elif not spell.variables.is_empty() and not is_channelling:
 					var dict = {}
 					for v in spell.variables:
@@ -39,14 +40,21 @@ func find_spell(pattern : Array):
 		
 	return null
 	
-func process_custom_spell(pattern : Array):
+func process_custom_spell(spell : Spell):
 	var results_array = []
-	var spell : Spell = find_spell(pattern)
 	if spell == null:
 		pass
+	if spell.variables.is_empty():
+		if spell is SelfReference:
+			#this sucks, get rid of this
+			spell.Being = Global.player.get_node("Being")
+	else:
+		var dict = {}
+		for v in spell.variables:
+			dict[v] = pop_stack()
+		spell.handle_variables(dict)
 	results_array = await spell.spell_effect().duplicate()
-	if spell is Spell:
-		spell.returns.clear()
+	spell.returns.clear()
 		
 	for r in results_array:
 		var s_i = r
@@ -66,24 +74,23 @@ func process_spell(pattern):
 		Global.stack_changed.emit(stack)
 	else:
 		if is_channelling:
-			push_stack(StackItem.new(pattern.duplicate()))
+			push_stack(StackItem.new(s))
 		else:
 			results_array = await s.spell_effect().duplicate()
 			if s is Spell:
 				s.returns.clear()
 			for r in results_array:
 				var s_i = r
-				if s_i != null and not is_channelling:
-					
+				if s_i != null and not is_channelling:	
 					push_stack(s_i)
 
 func condense_patterns():
 	var spells : Array
 	for stack_item in stack:
-		if stack_item.value is Array:
+		if stack_item.value is Spell:
 			spells.append(stack_item.value)
 	for i in range(stack.size()-1, -1, -1):
-		if stack[i].value is Array:
+		if stack[i].value is Spell:
 			stack.remove_at(i)
 	var pattern_sequence : StackItem = StackItem.new(spells)
 	Global.channel_finished.emit(pattern_sequence.value)

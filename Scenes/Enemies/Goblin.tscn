@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://donjw28qe82iy"]
+
+[ext_resource type="Script" path="res://Scripts/Being.gd" id="1_jkqfu"]
+[ext_resource type="Script" path="res://Scripts/Goblin.gd" id="1_pfby0"]
+[ext_resource type="PackedScene" uid="uid://5rg8wvhftb45" path="res://Scenes/HitboxComponent.tscn" id="2_ty3wt"]
+[ext_resource type="PackedScene" uid="uid://0j5wlyiujxdb" path="res://Scenes/HealthComponent.tscn" id="3_ek5b3"]
+[ext_resource type="Script" path="res://Scripts/GoblinHealthComponent.gd" id="5_7lib7"]
+[ext_resource type="Script" path="res://Scripts/Player/Head.gd" id="5_i8s5j"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2bu3k"]
+radius = 0.3
+height = 1.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6mun"]
+albedo_color = Color(0.419608, 0.639216, 0.45098, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2xpyy"]
+radius = 0.3
+height = 1.7
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6hojr"]
+
+[node name="Goblin" type="CharacterBody3D" groups=["enemy"]]
+collision_layer = 4
+script = ExtResource("1_pfby0")
+sight_range = 20
+attack_range = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_2bu3k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_o6mun")
+mesh = SubResource("CapsuleMesh_2xpyy")
+
+[node name="Being" type="Node3D" parent="."]
+script = ExtResource("1_jkqfu")
+
+[node name="HitboxComponent" parent="Being" node_paths=PackedStringArray("hitbox_area", "health_component") instance=ExtResource("2_ty3wt")]
+collision_layer = 16
+collision_mask = 8
+hitbox_area = NodePath(".")
+health_component = NodePath("../HealthComponent")
+
+[node name="Hitbox" type="CollisionShape3D" parent="Being/HitboxComponent"]
+shape = SubResource("CapsuleShape3D_6hojr")
+
+[node name="HealthComponent" parent="Being" instance=ExtResource("3_ek5b3")]
+script = ExtResource("5_7lib7")
+max_health = 4
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 4.0
+path_height_offset = 0.2
+
+[node name="Head" type="Node3D" parent="."]
+script = ExtResource("5_i8s5j")
+
+[node name="SightRaycast" type="RayCast3D" parent="."]
+collision_mask = 3
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="AttackRaycast" type="RayCast3D" parent="."]
+collision_mask = 32
+collide_with_areas = true
+
+[connection signal="on_goblin_hit" from="Being/HealthComponent" to="." method="_on_health_component_on_goblin_hit"]
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

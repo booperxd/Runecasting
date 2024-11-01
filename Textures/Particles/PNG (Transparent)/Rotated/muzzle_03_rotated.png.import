@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bw6bluqo2suim"
-path="res://.godot/imported/muzzle_03_rotated.png-3dd9cae4d41fedf24a7d22b2ea143205.ctex"
+path="res://.godot/imported/muzzle_03_rotated.png-8366008bf79e860fd0a395e9f999a014.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Particles/PNG (Transparent)/Rotated/muzzle_03_rotated.png"
-dest_files=["res://.godot/imported/muzzle_03_rotated.png-3dd9cae4d41fedf24a7d22b2ea143205.ctex"]
+source_file="res://textures/Particles/PNG (Transparent)/Rotated/muzzle_03_rotated.png"
+dest_files=["res://.godot/imported/muzzle_03_rotated.png-8366008bf79e860fd0a395e9f999a014.ctex"]
 
 [params]
 

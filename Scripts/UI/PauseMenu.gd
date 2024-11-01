@@ -6,11 +6,8 @@ extends Control
 @onready var sens_slider : HSlider = $Panel/SettingsContainer/SensitivityContainer/SensSlider
 @onready var bob_slider : HSlider = $Panel/SettingsContainer/BobAmpContainer/BobSlider
 
-var terrain : VoxelTerrain
-
 func _ready():
 	await(owner.ready)
-	terrain = Global.current_scene.get_node("VoxelTerrain")
 	button_container.visible = true
 	settings_panel.visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -20,6 +17,7 @@ func _ready():
 
 func _on_save_button_pressed():
 	Global.player_settings.save()
+	
 	button_container.visible = true
 	settings_panel.visible = false
 
@@ -30,8 +28,9 @@ func _on_settings_button_pressed():
 
 
 func _on_quit_button_pressed():
-	terrain.save_modified_blocks()
-	
+	#terrain.save_modified_blocks()
+	Global.player.player_spells.save()
+	Global.save_data.save(get_tree().get_current_scene())
 	get_tree().quit()
 
 

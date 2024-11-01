@@ -10,11 +10,13 @@ var health : int
 func _ready():
 	health = max_health
 
+
 func take_damage(attack : Attack):
 	health -= attack.damage
-	print("took damage")
 	if health <= 0:
 		die()
 
 func die():
 	owner.queue_free()
+
+

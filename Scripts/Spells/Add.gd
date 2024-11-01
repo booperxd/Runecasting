@@ -17,4 +17,6 @@ func _init():
 func spell_effect():
 	if x != null and y != null:
 		returns.append(StackItem.new(x.value + y.value))
+	else:
+		returns.append(StackItem.new(0))
 	return returns 

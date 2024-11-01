@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=7 format=3 uid="uid://cm6awp5c74vj5"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_2138t"]
+[ext_resource type="Resource" uid="uid://c36hv0o6g0udo" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="1_ct56d"]
+[ext_resource type="Resource" uid="uid://ccwosedfa8v8d" path="res://addons/qodot/game_definitions/fgd/point_classes/light_point_class.tres" id="2_hfmqc"]
+[ext_resource type="Resource" uid="uid://baejr0du5yu3b" path="res://definitions/torch.tres" id="3_aigtf"]
+[ext_resource type="Resource" uid="uid://bf2w6p6erl5g0" path="res://definitions/lever.tres" id="4_qnqou"]
+[ext_resource type="Resource" uid="uid://mimkvg4uvoyn" path="res://definitions/killpit.tres" id="5_iymc1"]
+
+[resource]
+script = ExtResource("1_2138t")
+export_file = false
+target_folder = "C:/Users/coope/OneDrive/Documents/GitHub/Runecasting/definitions"
+fgd_name = "RuneCast"
+base_fgd_files = Array[Resource]([ExtResource("1_ct56d")])
+entity_definitions = Array[Resource]([ExtResource("2_hfmqc"), ExtResource("3_aigtf"), ExtResource("4_qnqou"), ExtResource("5_iymc1")])

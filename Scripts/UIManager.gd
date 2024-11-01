@@ -4,10 +4,9 @@ extends Node3D
 @export var notes_ui : Control
 @export var pause_ui : Control
 @export var spell_builder_ui : Control
-@export var crosshair : Control
 @onready var toast_panel : Control = $"../Head/Camera3D/CanvasLayer/ToastPanel"
 
-@onready var canvas_layer : CanvasLayer = $"../Head/Camera3D/CanvasLayer"
+@onready var menus : Control = $"../Head/Camera3D/CanvasLayer/Menus"
 
 var current_interaction : Global.Interactables
 
@@ -45,7 +44,7 @@ func interact(type : Global.Interactables):
 	current_interaction = type
 
 func all_menus_closed(ignore : Control) -> bool:
-	for c in canvas_layer.get_children():
-		if c.visible and c != ignore and c != crosshair and c!= toast_panel:
+	for c in menus.get_children():
+		if c.visible and c != ignore:
 			return false
 	return true

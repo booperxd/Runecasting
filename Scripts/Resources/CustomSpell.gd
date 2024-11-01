@@ -2,5 +2,6 @@ class_name CustomSpell
 
 extends Resource
 
-var spell_name : String
-var spells : Array
+@export var spell_name : String
+@export var spells : Array
+@export var icon : Texture2D

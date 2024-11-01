@@ -16,7 +16,7 @@ func _init():
 	pattern = ["ddr", "r", "dur", "dul", "l", "ddl"]
 
 func spell_effect():
-	if starting_position.value is Vector3 and direction.value is Vector3:
+	if starting_position != null and starting_position.value is Vector3 and direction != null and direction.value is Vector3:
 		var instance : Area3D = projectile.instantiate()
 		instance.position = starting_position.value
 		

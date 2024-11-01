@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://djnwgmeye1fko"
+path="res://.godot/imported/dungeoncave.7.map-23a3272f52d1923faa1a8492a817431c.tres"
+
+[deps]
+
+source_file="res://Maps/autosave/dungeoncave.7.map"
+dest_files=["res://.godot/imported/dungeoncave.7.map-23a3272f52d1923faa1a8492a817431c.tres"]
+
+[params]
+

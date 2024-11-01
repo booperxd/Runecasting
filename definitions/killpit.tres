@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=3 format=3 uid="uid://mimkvg4uvoyn"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_cbi4t"]
+
+[sub_resource type="GDScript" id="GDScript_o7d0r"]
+script/source = "
+extends Area3D
+
+func _ready():
+	self.connect(\"body_entered\", on_body_entered)
+
+func on_body_entered(body : Node3D):
+	if body is HitboxComponent:
+		var attack = Attack.new(999)
+		var being : HitboxComponent = body as HitboxComponent
+		being.damage(attack)
+"
+
+[resource]
+script = ExtResource("1_cbi4t")
+spawn_type = 2
+build_visuals = true
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 1
+collision_mask = 48
+collision_priority = 1.0
+collision_shape_margin = 0.04
+script_class = SubResource("GDScript_o7d0r")
+classname = "killpit"
+description = "does a lot of damage to anything that enters it"
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.968627, 0, 0.0156863, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+transient_node = false

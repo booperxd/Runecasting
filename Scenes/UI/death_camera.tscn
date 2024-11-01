@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://kpsdxau1by2f"]
+
+[ext_resource type="Script" path="res://Scripts/UI/DeathCamera.gd" id="1_ub6xj"]
+[ext_resource type="Script" path="res://Scripts/UI/DeathCameraUI.gd" id="2_66vn6"]
+
+[node name="DeathCamera" type="Camera3D"]
+script = ExtResource("1_ub6xj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DeathCameraUI" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("2_66vn6")
+
+[node name="Label" type="Label" parent="CanvasLayer/DeathCameraUI"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "The Magic Fades..."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/DeathCameraUI"]
+layout_mode = 2
+alignment = 1
+
+[node name="LoadButton" type="Button" parent="CanvasLayer/DeathCameraUI/HBoxContainer"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/DeathCameraUI/HBoxContainer"]
+layout_mode = 2
+text = "Quit to Menu"
+
+[connection signal="pressed" from="CanvasLayer/DeathCameraUI/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/DeathCameraUI/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

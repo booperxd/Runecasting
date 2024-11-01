@@ -8,3 +8,9 @@ extends Area3D
 func damage(attack : Attack):
 	if health_component:
 		health_component.take_damage(attack)
+
+func apply_effect(effect : Effect):
+	pass
+
+func remove_effect(effect : Effect):
+	pass

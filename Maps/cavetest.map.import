@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://s622mco3idmm"
+path="res://.godot/imported/cavetest.map-1c8ebc07c3bfe221e5a1fcb6a7c0aa93.tres"
+
+[deps]
+
+source_file="res://Maps/cavetest.map"
+dest_files=["res://.godot/imported/cavetest.map-1c8ebc07c3bfe221e5a1fcb6a7c0aa93.tres"]
+
+[params]
+
