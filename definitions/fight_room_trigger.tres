@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" load_steps=3 format=3 uid="uid://db8y7i3gqlipt"]
+
+[ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_solid_class.gd" id="1_gkinf"]
+
+[sub_resource type="GDScript" id="GDScript_uhusp"]
+script/source = "extends Area3D
+
+@export var func_godot_properties : Dictionary
+
+var room_name : String
+
+func _ready():
+	body_entered.connect(_on_body_entered)
+	
+	room_name = func_godot_properties[\"room_name\"]
+	
+func _on_body_entered(body):
+	if body is RuneWizard:
+		Global.enter_fight_room.emit(room_name)
+		print(room_name)
+"
+
+[resource]
+script = ExtResource("1_gkinf")
+spawn_type = 2
+origin_type = 0
+build_visuals = false
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 1
+collision_mask = 2
+collision_priority = 1.0
+collision_shape_margin = 0.04
+script_class = SubResource("GDScript_uhusp")
+classname = "fight_room_trigger"
+description = "room that triggers fight rooms"
+func_godot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"room_name": ""
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"room_name": "",
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+name_property = ""

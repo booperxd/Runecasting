@@ -15,6 +15,7 @@ func _ready():
 func find_spell(pattern : Array):
 	for spell in learned_spells.spells:
 		if spell is Spell:
+			spell.caster = Global.player.get_node("Being")
 			if spell.pattern.size() == 0:
 				continue
 			if Global.check_if_all_dups(pattern) and pattern[0] == spell.pattern[0] and Global.check_if_all_dups(spell.pattern):
@@ -23,15 +24,18 @@ func find_spell(pattern : Array):
 						spell.number = pattern.size()
 						return spell
 			if pattern == spell.pattern:
-				if spell.variables.is_empty():
-					if spell is SelfReference:
-						#this sucks, get rid of this
-						spell.Being = Global.player.get_node("Being")
-				elif not spell.variables.is_empty() and not is_channelling:
-					var dict = {}
-					for v in spell.variables:
-						dict[v] = pop_stack()
-					spell.handle_variables(dict)
+				if not spell.variables.is_empty() and not is_channelling:
+					var dict : Dictionary = {}
+					#for v in spell.variables:
+					#	dict[v] = pop_stack()
+					map_vars(dict, spell.variables)
+					var new_modifers : Array[Modifier]
+					for modifier in stack:
+						if modifier.value is Modifier:
+							new_modifers.append(modifier.value)
+							stack.erase(modifier)
+							Global.stack_changed.emit(stack)
+					spell.handle_variables(dict, new_modifers)
 				return spell
 				#if Global.player_spells.check_if_player_knows_spell(spell):
 				#	return spell
@@ -52,7 +56,7 @@ func process_custom_spell(spell : Spell):
 		var dict = {}
 		for v in spell.variables:
 			dict[v] = pop_stack()
-		spell.handle_variables(dict)
+		spell.handle_variables(dict, [])
 	results_array = await spell.spell_effect().duplicate()
 	spell.returns.clear()
 		
@@ -60,6 +64,20 @@ func process_custom_spell(spell : Spell):
 		var s_i = r
 		if s_i != null:
 			push_stack(s_i)
+
+func map_vars(dict : Dictionary, spell_vars : Dictionary):
+	for spell in spell_vars:
+		for stack_item in stack:
+			if typeof(stack_item.value) == typeof(spell_vars[spell]):
+				if typeof(spell_vars[spell]) == 24:
+					if spell_vars[spell] is Element and stack_item.value is Element:
+						pass
+					else:
+						continue
+				dict[spell] = stack_item
+				stack.erase(stack_item)
+				Global.stack_changed.emit(stack)
+				continue
 
 func process_spell(pattern):
 	var s = find_spell(pattern)

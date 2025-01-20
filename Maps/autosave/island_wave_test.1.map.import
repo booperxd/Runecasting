@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://i2jm8rfdhq3v"
+path="res://.godot/imported/island_wave_test.1.map-d45a0573c4680fbc6e19d211f75fbed4.tres"
+
+[deps]
+
+source_file="res://Maps/autosave/island_wave_test.1.map"
+dest_files=["res://.godot/imported/island_wave_test.1.map-d45a0573c4680fbc6e19d211f75fbed4.tres"]
+
+[params]
+

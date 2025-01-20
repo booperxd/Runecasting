@@ -10,10 +10,11 @@ backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_faf41"]
+flip_faces = true
 size = Vector2(3, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kj5eq"]
-size = Vector3(4, 5, 3)
+size = Vector3(5, 5, 3)
 
 [node name="Portal" type="Area3D"]
 collision_layer = 128
@@ -26,7 +27,6 @@ cast_shadow = 0
 mesh = SubResource("QuadMesh_faf41")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.45245)
 shape = SubResource("BoxShape3D_kj5eq")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

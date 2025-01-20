@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://qf5470yxt87i"]
+
+[ext_resource type="Texture2D" uid="uid://cl25ey0ahdtay" path="res://textures/World/Lofi/96px/laminate.png" id="1_ccrtu"]
+
+[resource]
+albedo_texture = ExtResource("1_ccrtu")
+metallic_specular = 0.0
+texture_filter = 2

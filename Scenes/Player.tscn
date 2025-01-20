@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ccqytdvewgntf"]
+[gd_scene load_steps=30 format=3 uid="uid://ccqytdvewgntf"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_h1lv3"]
 [ext_resource type="Script" path="res://Scripts/Being.gd" id="2_7s8qc"]
@@ -17,6 +17,13 @@
 [ext_resource type="PackedScene" uid="uid://bxx1nfavgc6oh" path="res://Scenes/UI/player_ui.tscn" id="13_3ge7t"]
 [ext_resource type="Shader" path="res://Shaders/pixelshader.gdshader" id="16_a1bc4"]
 [ext_resource type="PackedScene" uid="uid://binnnhd2w1mg5" path="res://Scenes/SpellPrefabs/Staff.tscn" id="16_l3pxv"]
+[ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="18_qks3l"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerIdle.gd" id="19_e6vel"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerMoving.gd" id="20_fincx"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerJumping.gd" id="21_321m0"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerCasting.gd" id="22_vt21f"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerNotebookOpen.gd" id="23_5666k"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerDash.gd" id="24_bj83c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wiiv"]
 
@@ -24,12 +31,12 @@
 radius = 0.6
 height = 2.2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_50nug"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8t6tt"]
 render_priority = 1
 shader = ExtResource("16_a1bc4")
 
 [sub_resource type="QuadMesh" id="QuadMesh_2oi00"]
-material = SubResource("ShaderMaterial_50nug")
+material = SubResource("ShaderMaterial_8t6tt")
 size = Vector2(15, 15)
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_16xj8"]
@@ -40,7 +47,7 @@ collision_mask = 5
 script = ExtResource("1_h1lv3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("CapsuleShape3D_8wiiv")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
@@ -54,6 +61,7 @@ script = ExtResource("2_7s8qc")
 
 [node name="HealthComponent" parent="Being" instance=ExtResource("7_7pafu")]
 script = ExtResource("4_ftq5f")
+regen_amount = 0.05
 max_health = 20
 
 [node name="HitboxComponent" parent="Being" node_paths=PackedStringArray("hitbox_area", "health_component") instance=ExtResource("8_68ofn")]
@@ -154,5 +162,34 @@ transform = Transform3D(-0.5, 0, 4.37114e-08, 0, 0.5, 0, -4.37114e-08, 0, -0.5, 
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0)
 shape = SubResource("SeparationRayShape3D_16xj8")
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("18_qks3l")
+initial_state = NodePath("PlayerIdle")
+
+[node name="PlayerIdle" type="Node" parent="StateMachine"]
+script = ExtResource("19_e6vel")
+
+[node name="PlayerMoving" type="Node" parent="StateMachine"]
+script = ExtResource("20_fincx")
+
+[node name="PlayerJumping" type="Node" parent="StateMachine"]
+script = ExtResource("21_321m0")
+
+[node name="PlayerCasting" type="Node" parent="StateMachine" node_paths=PackedStringArray("rune_ui")]
+script = ExtResource("22_vt21f")
+rune_ui = NodePath("../../Head/Camera3D/CanvasLayer/Menus/RuneUI")
+
+[node name="PlayerNotebookOpen" type="Node" parent="StateMachine" node_paths=PackedStringArray("notebook_ui")]
+script = ExtResource("23_5666k")
+notebook_ui = NodePath("../../Head/Camera3D/CanvasLayer/Menus/Notebook")
+
+[node name="PlayerDash" type="Node" parent="StateMachine"]
+script = ExtResource("24_bj83c")
+
+[node name="DashTimer" type="Timer" parent="StateMachine/PlayerDash"]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="timeout" from="Head/Camera3D/CanvasLayer/ToastPanel/ToastTimer" to="Head/Camera3D/CanvasLayer/ToastPanel" method="_on_toast_timer_timeout"]
 [connection signal="ready" from="Head/Camera3D/CanvasLayer/PlayerUI" to="Being/HealthComponent" method="_on_player_ui_ready"]
+[connection signal="timeout" from="StateMachine/PlayerDash/DashTimer" to="StateMachine/PlayerDash" method="_on_dash_timer_timeout"]

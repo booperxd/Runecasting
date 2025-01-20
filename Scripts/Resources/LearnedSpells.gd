@@ -4,10 +4,15 @@ extends Resource
 
 var spell_data : SpellData = ResourceLoader.load("res://Scripts/Resources/SpellData.gd").new()
 
-@export var custom_spells : Dictionary
-@export var custom_spell : CustomSpell
+@export var current_runes : Dictionary = {
+	"rune_1" : null,
+	"rune_2" : null,
+	"rune_3" : null,
+	"rune_4" : null,
+	"rune_5" : null,
+}
 
-@export var spells : Array
+@export var spells : Array[RuneSpell]
 
 func _init():
 	if spells.is_empty():
@@ -31,9 +36,6 @@ func learn_spell(spell : Spell):
 	if spells.has(spell):
 		return
 	spells.append(spell)
-
-func add_custom_spell(new_spell : CustomSpell, page : int):
-	custom_spells[page] = new_spell
 
 
 func save():

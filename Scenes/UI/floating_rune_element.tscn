@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6ndilkxcm47v"]
+
+[ext_resource type="Texture2D" uid="uid://ct5k3stckx4p7" path="res://textures/UI/RuneIcons/fire.png" id="1_7bt3w"]
+[ext_resource type="Script" path="res://Scripts/UI/floating_rune_element.gd" id="2_jqu5v"]
+
+[sub_resource type="Animation" id="Animation_dugoj"]
+resource_name = "rune_casted"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.000841826, 0.00108868, -0.000491828, 1, 1, 0.0324239, 0.165813, 0.307155)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i6tmp"]
+_data = {
+"rune_casted": SubResource("Animation_dugoj")
+}
+
+[node name="FloatingRuneElement" type="Sprite3D"]
+transform = Transform3D(0.245, -7.82311e-08, -1.49012e-08, 3.72529e-09, 0.245, -1.49012e-08, -1.49012e-08, 7.45058e-09, 0.245, 0.0324239, 0.165813, 0.307155)
+modulate = Color(1, 1, 1, 0)
+billboard = 1
+texture = ExtResource("1_7bt3w")
+script = ExtResource("2_jqu5v")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rune_casted"
+libraries = {
+"": SubResource("AnimationLibrary_i6tmp")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

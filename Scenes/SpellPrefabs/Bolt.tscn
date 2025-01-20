@@ -1,49 +1,71 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4bbbqkfoti7o"]
+[gd_scene load_steps=10 format=3 uid="uid://d4bbbqkfoti7o"]
 
 [ext_resource type="Script" path="res://Scripts/SpellPrefabs/Bolt.gd" id="1_14ogt"]
+[ext_resource type="Shader" uid="uid://c82jsowia2di4" path="res://Material/Shaders/Fireball.tres" id="2_g4ein"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v2i2n"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_8b4r8"]
+radius = 0.99
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3wmd3"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gojh4"]
+emission_shape = 2
+emission_sphere_radius = 0.5
+particle_flag_align_y = true
 direction = Vector3(0, 0, 0)
 spread = 0.0
-gravity = Vector3(0, -1, 0)
-initial_velocity_max = 0.2
-angular_velocity_min = 119.17
-angular_velocity_max = 119.17
-radial_accel_min = -4.14
-radial_accel_max = 13.79
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+radial_accel_min = 1.0
+radial_accel_max = 2.0
 angle_min = 119.2
 angle_max = 258.2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gge5c"]
-albedo_color = Color(0.862745, 0.564706, 1, 1)
-emission_enabled = true
-emission = Color(0.313726, 0.109804, 0.345098, 1)
-emission_energy_multiplier = 35.0
-billboard_mode = 1
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fd8rp"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.839216, 0.305882, 0.0431373, 1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_ky8xk"]
-material = SubResource("StandardMaterial3D_gge5c")
-size = Vector2(0.1, 0.1)
+[sub_resource type="QuadMesh" id="QuadMesh_ru8pn"]
+material = SubResource("StandardMaterial3D_fd8rp")
+size = Vector2(0.05, 0.3)
 
-[node name="Bolt" type="Area3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_f6uew"]
+radius = 1.45757
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ggp81"]
+render_priority = 0
+shader = ExtResource("2_g4ein")
+shader_parameter/FireColor = Color(2, 1.2, 0.5, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_sr4rv"]
+radius = 0.3
+height = 0.6
+
+[node name="Bolt" type="CharacterBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
 collision_layer = 8
 collision_mask = 17
 script = ExtResource("1_14ogt")
+area_collision = NodePath("Area3D")
+particles = NodePath("OrangeTrail")
+collision = NodePath("CollisionShape3D")
+particle_timer = NodePath("DetonationTimer")
+selfdestruct_timer = NodePath("SelfDestructTimer")
+speed = 1300.0
+damage = 6.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_v2i2n")
+shape = SubResource("SphereShape3D_8b4r8")
 
-[node name="BoltEffect" type="GPUParticles3D" parent="."]
+[node name="OrangeTrail" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.108083)
 amount = 45
 explosiveness = 0.16
 randomness = 1.0
 visibility_aabb = AABB(-0.87835, -1.31495, -1.50781, 1.7567, 2.62989, 3.01563)
-process_material = SubResource("ParticleProcessMaterial_3wmd3")
-draw_pass_1 = SubResource("QuadMesh_ky8xk")
+process_material = SubResource("ParticleProcessMaterial_gojh4")
+draw_pass_1 = SubResource("QuadMesh_ru8pn")
 
 [node name="DetonationTimer" type="Timer" parent="."]
 one_shot = true
@@ -53,7 +75,24 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_f6uew")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999993, 0.00368264, 0, -0.00368264, 0.999993, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_ggp81")
+cast_shadow = 0
+mesh = SubResource("SphereMesh_sr4rv")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.839216, 0.305882, 0.0431373, 1)
+
 [connection signal="timeout" from="DetonationTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

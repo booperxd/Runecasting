@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cesc5wftsn03b"]
 
-[ext_resource type="Texture2D" uid="uid://dr064cc63pclr" path="res://Textures/SpellParticles/smoke_1.png" id="1_h40w6"]
+[ext_resource type="Texture2D" uid="uid://dr064cc63pclr" path="res://textures/SpellParticles/smoke_1.png" id="1_h40w6"]
 [ext_resource type="Script" path="res://Scripts/SpellPrefabs/Explosion.gd" id="1_wl01n"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5hrgk"]
@@ -32,7 +32,7 @@ radial_accel_curve = SubResource("CurveTexture_c3qw8")
 
 [node name="Explosion" type="Area3D"]
 collision_layer = 8
-collision_mask = 48
+collision_mask = 16
 script = ExtResource("1_wl01n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -50,4 +50,5 @@ draw_pass_1 = SubResource("QuadMesh_y7lti")
 wait_time = 0.1
 one_shot = true
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]

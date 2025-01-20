@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDFile" load_steps=8 format=3 uid="uid://dgrk23jpuhdn"]
+
+[ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_file.gd" id="1_g5t3n"]
+[ext_resource type="Resource" uid="uid://crgpdahjaj" path="res://addons/func_godot/fgd/func_godot_fgd.tres" id="1_pf48d"]
+[ext_resource type="Resource" uid="uid://b3yptiyqlyl4s" path="res://definitions/torch.tres" id="2_ptqwn"]
+[ext_resource type="Resource" uid="uid://db8y7i3gqlipt" path="res://definitions/fight_room_trigger.tres" id="3_0ysem"]
+[ext_resource type="Resource" uid="uid://b0ypdj1fws5k5" path="res://definitions/fight_room_obstacle.tres" id="4_jyf3a"]
+[ext_resource type="Resource" uid="uid://o7mbcv60hux3" path="res://definitions/fight_room_spawner_manager.tres" id="5_slg0w"]
+[ext_resource type="Resource" uid="uid://btd1mjow7uler" path="res://definitions/fight_room_spawn_point.tres" id="6_neqme"]
+
+[resource]
+script = ExtResource("1_g5t3n")
+export_file = false
+model_key_word_supported = true
+fgd_name = "RuneCaster"
+base_fgd_files = Array[Resource]([ExtResource("1_pf48d")])
+entity_definitions = Array[Resource]([ExtResource("2_ptqwn"), ExtResource("3_0ysem"), ExtResource("4_jyf3a"), ExtResource("5_slg0w"), ExtResource("6_neqme")])

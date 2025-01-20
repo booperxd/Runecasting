@@ -1,20 +1,11 @@
-extends CharacterBody3D
-
-const SPEED = 2.0
-const JUMP_VELOCITY = 4.5
-const FRICTION = 25
-const HORIZONTAL_ACCELERATION = 30
-const MAX_SPEED=4
+extends Being
 
 @export var sight_range : int = 50
 @export var attack_range : int = 7
 @export var damage : int = 3
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var last_position_seen : Vector3
 
-@onready var being : Being = $Being
 @onready var agent : NavigationAgent3D = $NavigationAgent3D
 @onready var sight_raycast : RayCast3D = $SightRaycast
 @onready var attack_raycast : RayCast3D = $AttackRaycast
@@ -22,7 +13,7 @@ var last_position_seen : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	super._ready()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

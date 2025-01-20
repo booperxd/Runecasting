@@ -29,5 +29,7 @@ func stack_item_display() -> String:
 		return str(value)
 	elif value is Spell:
 		return str(value.spell_name)
+	elif value is Modifier:
+		return str(value.modifer_name)
 	else:
 		return ""

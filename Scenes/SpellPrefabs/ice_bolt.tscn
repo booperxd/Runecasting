@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkrjbtk7f78mj"]
+
+[ext_resource type="Script" path="res://Scripts/SpellPrefabs/IceBoltProjectile.gd" id="1_x5ndl"]
+[ext_resource type="Material" uid="uid://p7fvvyxurdpo" path="res://Material/FireMaterial.tres" id="2_j0kk7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iwlat"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d0tt5"]
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, -1, 0)
+initial_velocity_max = 0.2
+angular_velocity_min = 119.17
+angular_velocity_max = 119.17
+radial_accel_min = -4.14
+radial_accel_max = 13.79
+angle_min = 119.2
+angle_max = 258.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_rwnwj"]
+material = ExtResource("2_j0kk7")
+size = Vector2(0.15, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okevo"]
+albedo_color = Color(0.654902, 0.858824, 0.85098, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o8ucu"]
+material = SubResource("StandardMaterial3D_okevo")
+radius = 0.2
+height = 1.0
+
+[node name="IceBolt" type="CharacterBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
+collision_layer = 8
+collision_mask = 17
+script = ExtResource("1_x5ndl")
+area_collision = NodePath("Area3D")
+particles = NodePath("IceTrail")
+collision = NodePath("CollisionShape3D")
+particle_timer = NodePath("DetonationTimer")
+selfdestruct_timer = NodePath("SelfDestructTimer")
+speed = 1100.0
+damage = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_iwlat")
+
+[node name="IceTrail" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.28932)
+amount = 45
+explosiveness = 0.16
+randomness = 1.0
+visibility_aabb = AABB(-0.87835, -1.31495, -1.50781, 1.7567, 2.62989, 3.01563)
+process_material = SubResource("ParticleProcessMaterial_d0tt5")
+draw_pass_1 = SubResource("QuadMesh_rwnwj")
+
+[node name="DetonationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SelfDestructTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_iwlat")
+
+[node name="IcicleMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_o8ucu")
+
+[connection signal="timeout" from="DetonationTimer" to="." method="_on_detonation_timer_timeout"]
+[connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

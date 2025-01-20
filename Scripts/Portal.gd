@@ -11,6 +11,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("interact") and can_teleport and destination_scene != null:
 		var scene = PackedScene.new()
 		scene.pack(get_tree().current_scene)
+		Global.player.player_spells.save()
+		Global.save_data.save(get_tree().get_current_scene())
 		Global.previous_scene = scene
 		get_tree().change_scene_to_packed(destination_scene)
 

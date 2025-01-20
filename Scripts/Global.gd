@@ -2,19 +2,33 @@ extends Node
 
 signal current_star(position)
 signal player_learn_spell(spell)
+
+signal rune_casted(rune : Rune)
 signal stack_changed(stack)
+signal spell_casted()
+signal notebook_saved(bytes : ViewportTexture)
+
 signal open_toast(text)
 signal spell_finished(current_pattern)
 signal interactable_near(type : Interactables)
 
+signal finale_spell_casted()
+
 signal set_player_health(new_health : int, max_health : int)
+signal set_player_stamina(new_stamina : float)
 
 signal custom_spell_added(custom_spell, page)
 signal channel_finished(patterns)
 
+signal rune_changed(rune, page)
+
+signal enter_fight_room(room_name)
+signal beat_fight_room(room_name)
+signal enemy_beat_in_room()
+
 var current_scene
 var previous_scene : PackedScene
-var player : Player
+var player : RuneWizard
 var player_settings : PlayerSettings
 var save_data : SaveData
 

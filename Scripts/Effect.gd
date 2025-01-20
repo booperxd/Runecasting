@@ -12,21 +12,33 @@ var effect_duration : float
 
 func _ready():
 	var dur_timer : Timer = Timer.new()
-	var effect_timer : Timer = Timer.new()
 	add_child(dur_timer)
-	add_child(effect_timer)
+	
 	dur_timer.one_shot = true
 	dur_timer.wait_time = effect_duration
 	
-	effect_timer.one_shot = false
-	effect_timer.wait_time = interval_timer
-	
-	
 	dur_timer.timeout.connect(on_dur_timer_timeout)
-	effect_timer.timeout.connect(on_effect_timer_timeout)
 	
 	dur_timer.start()
-	effect_timer.start()
+	if (interval_timer != 0.0):
+		var effect_timer : Timer = Timer.new()
+	
+		add_child(effect_timer)
+		
+		
+		effect_timer.one_shot = false
+		effect_timer.wait_time = interval_timer
+		
+		effect_timer.timeout.connect(on_effect_timer_timeout)
+		effect_timer.start()
+	else:
+		handle_effect()
+	
+	
+	
+	
+	
+	
 	
 	if (particle_effect != null):
 		var particle_instance : GPUParticles3D = particle_effect.instantiate()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://d38lsgkv6yy7f"]
+[gd_scene load_steps=25 format=3 uid="uid://d38lsgkv6yy7f"]
 
 [ext_resource type="Script" path="res://Scripts/Level/PocketDimension.gd" id="1_0r65b"]
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_dtvmh"]
@@ -7,11 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://bow33oofi7a3q" path="res://textures/World/Grass/Grass_12-256x256.png" id="4_rwqhc"]
 [ext_resource type="Texture2D" uid="uid://bpncttog0tfs7" path="res://textures/World/Grass/Grass_21-256x256.png" id="5_mlj0i"]
 [ext_resource type="Texture2D" uid="uid://btn2heahsayye" path="res://textures/World/Roofs/Roofs_01-256x256.png" id="6_n5wmu"]
-[ext_resource type="PackedScene" uid="uid://ccqytdvewgntf" path="res://Scenes/Player.tscn" id="6_r51by"]
 [ext_resource type="Texture2D" uid="uid://dlvw6lge4ltwx" path="res://textures/World/Wood/Wood_10-256x256.png" id="7_8oia1"]
 [ext_resource type="PackedScene" uid="uid://d12l0hchsos47" path="res://Scenes/ArcaneLight.tscn" id="9_kfhbf"]
 [ext_resource type="PackedScene" uid="uid://c7ggggbdw6ivc" path="res://Scenes/study_table.tscn" id="10_6cewj"]
 [ext_resource type="PackedScene" uid="uid://de4j1pxs1xte7" path="res://Scenes/Portal.tscn" id="12_ccqly"]
+[ext_resource type="PackedScene" uid="uid://b5fe0p7l23hdh" path="res://Scenes/RuneWizard.tscn" id="13_7g3kk"]
+[ext_resource type="PackedScene" uid="uid://donjw28qe82iy" path="res://Scenes/Enemies/Goblin.tscn" id="13_ppouv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdjy7"]
 diffuse_mode = 3
@@ -97,13 +98,13 @@ sky_top_color = Color(0.262745, 0.533333, 0.796078, 1)
 sky_horizon_color = Color(0.647059, 0.654902, 0.670588, 1)
 ground_bottom_color = Color(0.184314, 0.356863, 0.572549, 1)
 
-[sub_resource type="Sky" id="Sky_xkdq7"]
+[sub_resource type="Sky" id="Sky_xabnw"]
 sky_material = SubResource("ProceduralSkyMaterial_mowat")
 
 [sub_resource type="Environment" id="Environment_u88gn"]
 background_mode = 2
 background_color = Color(0.317647, 0.521569, 1, 1)
-sky = SubResource("Sky_xkdq7")
+sky = SubResource("Sky_xabnw")
 tonemap_mode = 2
 tonemap_white = 6.0
 sdfgi_enabled = true
@@ -146,8 +147,6 @@ mesh = SubResource("ArrayMesh_5gw82")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="QodotMap/entity_0_worldspawn/entity_0_mesh_instance/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_cjt7q")
 
-[node name="Player" parent="." instance=ExtResource("6_r51by")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_u88gn")
 
@@ -173,5 +172,12 @@ shape = SubResource("BoxShape3D_v0gp7")
 
 [node name="Portal" parent="." instance=ExtResource("12_ccqly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.204974, -0.592574, -4.78743)
+
+[node name="Goblin" parent="." instance=ExtResource("13_ppouv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.1992, -2.05624, -0.93558)
+damage = 5
+
+[node name="RuneWizard" parent="." instance=ExtResource("13_7g3kk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.41158, -3.2642, 14.0237)
 
 [connection signal="body_entered" from="BoundaryBox" to="." method="_on_boundary_box_body_entered"]

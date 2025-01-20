@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/UI/PlayerUI.gd" id="1_0jsgi"]
 [ext_resource type="Texture2D" uid="uid://cm7xowy3cqbxf" path="res://textures/Particles/PNG (Transparent)/magic_03.png" id="1_k11oe"]
-[ext_resource type="Texture2D" uid="uid://bx5kpk3abvchi" path="res://textures/UI/radial_bar.png" id="2_psk0p"]
+[ext_resource type="Texture2D" uid="uid://8prhm8t7rfij" path="res://textures/UI/horizontal_bar.png" id="3_cpqon"]
 [ext_resource type="Texture2D" uid="uid://c23u4fcpw8f2f" path="res://textures/UI/BookPage.png" id="4_tsi3t"]
 
 [node name="PlayerUI" type="Control"]
@@ -46,35 +46,34 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
 
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+offset_right = 512.0
+offset_bottom = 64.0
+scale = Vector2(0.7, 0.7)
+max_value = 20.0
+step = 0.001
+texture_under = ExtResource("3_cpqon")
+texture_progress = ExtResource("3_cpqon")
+tint_under = Color(0.258824, 0.25098, 0.235294, 1)
+tint_progress = Color(1, 0, 0, 1)
+
 [node name="BottomContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = -1
+anchor_top = 0.87
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+alignment = 1
 
-[node name="HealthBar" type="TextureProgressBar" parent="BottomContainer"]
-layout_mode = 2
-value = 31.0
-fill_mode = 4
-texture_under = ExtResource("2_psk0p")
-texture_progress = ExtResource("2_psk0p")
-tint_under = Color(0.258824, 0.25098, 0.235294, 1)
-tint_progress = Color(1, 0, 0, 1)
-
-[node name="SpellContainer" type="HBoxContainer" parent="BottomContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 2
-
-[node name="Page1" type="TextureRect" parent="BottomContainer/SpellContainer"]
+[node name="Page1" type="TextureRect" parent="BottomContainer"]
 layout_mode = 2
 texture = ExtResource("4_tsi3t")
 expand_mode = 3
 
-[node name="SpellIcon" type="TextureRect" parent="BottomContainer/SpellContainer/Page1"]
+[node name="SpellIcon" type="TextureRect" parent="BottomContainer/Page1"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -88,12 +87,12 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Page2" type="TextureRect" parent="BottomContainer/SpellContainer"]
+[node name="Page2" type="TextureRect" parent="BottomContainer"]
 layout_mode = 2
 texture = ExtResource("4_tsi3t")
 expand_mode = 3
 
-[node name="SpellIcon" type="TextureRect" parent="BottomContainer/SpellContainer/Page2"]
+[node name="SpellIcon" type="TextureRect" parent="BottomContainer/Page2"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -107,12 +106,12 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Page3" type="TextureRect" parent="BottomContainer/SpellContainer"]
+[node name="Page3" type="TextureRect" parent="BottomContainer"]
 layout_mode = 2
 texture = ExtResource("4_tsi3t")
 expand_mode = 3
 
-[node name="SpellIcon" type="TextureRect" parent="BottomContainer/SpellContainer/Page3"]
+[node name="SpellIcon" type="TextureRect" parent="BottomContainer/Page3"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -125,3 +124,76 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Page4" type="TextureRect" parent="BottomContainer"]
+layout_mode = 2
+texture = ExtResource("4_tsi3t")
+expand_mode = 3
+
+[node name="SpellIcon" type="TextureRect" parent="BottomContainer/Page4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Page5" type="TextureRect" parent="BottomContainer"]
+layout_mode = 2
+texture = ExtResource("4_tsi3t")
+expand_mode = 3
+
+[node name="SpellIcon" type="TextureRect" parent="BottomContainer/Page5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StackPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.75
+anchor_right = 0.8
+anchor_bottom = 0.87
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StackContainer" type="HBoxContainer" parent="StackPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StaminaBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_bottom = 0.1
+offset_top = 0.199997
+offset_right = 512.0
+offset_bottom = 64.2
+scale = Vector2(0.5, 0.5)
+min_value = 1.0
+step = 0.01
+value = 86.81
+texture_under = ExtResource("3_cpqon")
+texture_progress = ExtResource("3_cpqon")
+tint_under = Color(0.368627, 0.368627, 0.368627, 1)
+tint_progress = Color(0, 1, 0, 1)

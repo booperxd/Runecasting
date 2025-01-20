@@ -2,7 +2,7 @@ class_name Attack
 
 extends Resource
 
-var damage : int
+var damage : float
 
-func _init(_damage : int):
+func _init(_damage : float):
 	damage = _damage

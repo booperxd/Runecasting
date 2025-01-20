@@ -4,6 +4,7 @@ extends Resource
 
 @export var last_scene : PackedScene
 @export var player_health : int
+@export var player_notebook : Array[Line2D]
 
 
 func save(scene : Node):

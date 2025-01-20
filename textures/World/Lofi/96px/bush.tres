@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://drhsn60hxcip3"]
+
+[ext_resource type="Texture2D" uid="uid://cowpx28ve151r" path="res://textures/World/Lofi/96px/bush.png" id="1_qq02w"]
+
+[resource]
+albedo_texture = ExtResource("1_qq02w")
+metallic_specular = 0.0
+texture_filter = 2

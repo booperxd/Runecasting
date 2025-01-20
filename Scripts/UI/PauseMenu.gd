@@ -14,6 +14,8 @@ func _ready():
 	sens_slider.value = Global.player_settings.sens
 	bob_slider.value = Global.player_settings.bob_amp
 
+func _process(delta):
+	get_tree().paused = visible
 
 func _on_save_button_pressed():
 	Global.player_settings.save()
@@ -45,3 +47,8 @@ func _on_bob_slider_value_changed(value):
 func _on_cancel_button_pressed():
 	button_container.visible = true
 	settings_panel.visible = false
+
+
+func _on_resume_button_pressed():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	visible=false

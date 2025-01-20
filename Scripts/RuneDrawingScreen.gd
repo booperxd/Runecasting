@@ -14,6 +14,7 @@ var line_inst
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
 	Global.current_star.connect(at_star)
 	Global.stack_changed.connect(update_stack_display)
 
@@ -86,3 +87,5 @@ func get_pattern_direction(o : Vector2, d : Vector2):
 			return "ddl"
 	else:
 		return "?"
+
+

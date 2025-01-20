@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://u65ulf68al43"]
+
+[ext_resource type="Material" uid="uid://dggu405fmqwlv" path="res://Material/ArcaneMaterial.tres" id="1_7d0io"]
+[ext_resource type="Script" path="res://Scenes/SpellPrefabs/Lob.gd" id="1_i6vf2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f8yio"]
+radius = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_egmu7"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, -1, 0)
+initial_velocity_max = 2.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ueink"]
+material = ExtResource("1_7d0io")
+size = Vector2(0.1, 0.1)
+
+[node name="LobProjectile" type="CharacterBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
+collision_layer = 8
+collision_mask = 17
+script = ExtResource("1_i6vf2")
+area_collision = NodePath("Area3D")
+particles = NodePath("LobEffect")
+collision = NodePath("CollisionShape3D")
+particle_timer = NodePath("DetonationTimer")
+selfdestruct_timer = NodePath("SelfDestructTimer")
+speed = 600.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_f8yio")
+
+[node name="LobEffect" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.108083)
+amount = 60
+explosiveness = 0.16
+randomness = 1.0
+visibility_aabb = AABB(-0.87835, -1.31495, -1.50781, 1.7567, 2.62989, 3.01563)
+process_material = SubResource("ParticleProcessMaterial_egmu7")
+draw_pass_1 = SubResource("QuadMesh_ueink")
+
+[node name="DetonationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SelfDestructTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.3, 0, 0, 0, -1.31134e-08, -0.3, 0, 0.3, -1.31134e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_f8yio")
+
+[node name="GravityTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DetonationTimer" to="." method="_on_detonation_timer_timeout"]
+[connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
