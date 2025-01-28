@@ -13,13 +13,17 @@ var spell_data : SpellData = ResourceLoader.load("res://Scripts/Resources/SpellD
 }
 
 @export var spells : Array[RuneSpell]
+@export var runes : Array[Rune]
 
 func _init():
 	if spells.is_empty():
 		for s in spell_data.spells:
 			#if s is Spell and s.unlocked_by_default:
 			spells.append(s)
-		
+	if runes.is_empty():
+		for r in spell_data.runes:
+			if r.unlocked_by_default:
+				runes.append(r)
 
 func check_if_player_knows_spell(spell) -> bool:
 	if spell is Spell:
@@ -46,3 +50,10 @@ static func load_or_create() -> LearnedSpells:
 	if !res:
 		res = LearnedSpells.new()
 	return res
+
+static func delete() -> LearnedSpells:
+	var res : LearnedSpells = load("user://PlayerSpells.tres") as LearnedSpells
+	if !res:
+		return LearnedSpells.new()
+	DirAccess.remove_absolute("user://PlayerSpells.tres")
+	return LearnedSpells.new()

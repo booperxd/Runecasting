@@ -11,14 +11,14 @@ var rune_icon_scene : PackedScene = load("res://Scenes/UI/rune_icon.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	await(owner.ready)
-	spell_data = LearnedSpells.load_or_create()
+	spell_data = Global.player.player_spells
 	for rune in spell_data.current_runes.keys():
 		var rune_proper : Rune 
 		if spell_data.current_runes[rune] != null:
 			rune_proper = spell_data.current_runes[rune]
 		else:
 			rune_proper = Rune.new()
-	for rune in spell_data.spell_data.runes:
+	for rune in spell_data.runes:
 		var instance : RuneIcon = rune_icon_scene.instantiate() as RuneIcon
 		instance.is_draggable = true
 		rune_selectors.add_child(instance)

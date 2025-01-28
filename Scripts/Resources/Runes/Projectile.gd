@@ -6,3 +6,4 @@ func _init():
 	rune_name = "Projectile"
 	rune_desc = "The power of projecting energy forward."
 	rune_icon = load("res://textures/UI/RuneIcons/archer.png")
+	unlocked_by_default = true

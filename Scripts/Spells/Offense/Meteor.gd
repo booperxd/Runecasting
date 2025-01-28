@@ -6,7 +6,7 @@ var meteor : PackedScene = load("res://Scenes/SpellPrefabs/meteor.tscn")
 
 func _init():
 	spell_name = "Meteor"
-	pattern = [FireRune.new().rune_name, FireRune.new().rune_name, FireRune.new().rune_name]
+	pattern = [FireRune.new(), FireRune.new(), FireRune.new()]
 
 func spell_effect():
 	var instance : MeteorObject = meteor.instantiate()

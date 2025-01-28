@@ -7,7 +7,7 @@ extends Control
 
 @onready var sens_slider : HSlider = $Panel/SettingsContainer/SensitivityContainer/SensSlider
 @onready var bob_slider : HSlider = $Panel/SettingsContainer/BobAmpContainer/BobSlider
-
+@onready var class_select = $ClassSelect
 
 func _ready():
 	button_container.visible = true
@@ -55,8 +55,10 @@ func _on_load_game_button_pressed():
 	
 
 func _on_new_game_button_pressed():
-	var first_level : PackedScene = load("res://Scenes/Levels/test_dungeon.tscn")
-	get_tree().change_scene_to_packed(first_level)
+	#var first_level : PackedScene = load("res://Scenes/Levels/pocket_dimension.tscn")
+	#Global.save_data = SaveData.delete()
+	#LearnedSpells.delete()
+	class_select.visible = true
 
 
 func _on_clear_data_button_pressed():

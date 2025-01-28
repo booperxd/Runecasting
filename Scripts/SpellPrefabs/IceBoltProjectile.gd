@@ -8,8 +8,7 @@ func _ready():
 	cur_damage = damage
 
 func _physics_process(delta):
-	velocity = -(global_transform.basis.z * cur_speed * delta)
-	move_and_slide()
+	move_and_collide(-transform.basis.z * delta * cur_speed)
 
 
 func _on_self_destruct_timer_timeout():

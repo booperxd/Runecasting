@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3e7yishti2md"]
+
+[ext_resource type="Script" path="res://Scripts/Interactables/LevelPicker.gd" id="1_6xfrr"]
+[ext_resource type="PackedScene" uid="uid://fm7r000gh20q" path="res://Scenes/Levels/IslandWorldMap.tscn" id="2_lt2s2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cf4fr"]
+size = Vector3(3, 0.5, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_te05g"]
+data = PackedVector3Array(-1.5, 0.25, 3, 1.5, 0.25, 3, -1.5, -0.25, 3, 1.5, 0.25, 3, 1.5, -0.25, 3, -1.5, -0.25, 3, 1.5, 0.25, -3, -1.5, 0.25, -3, 1.5, -0.25, -3, -1.5, 0.25, -3, -1.5, -0.25, -3, 1.5, -0.25, -3, 1.5, 0.25, 3, 1.5, 0.25, -3, 1.5, -0.25, 3, 1.5, 0.25, -3, 1.5, -0.25, -3, 1.5, -0.25, 3, -1.5, 0.25, -3, -1.5, 0.25, 3, -1.5, -0.25, -3, -1.5, 0.25, 3, -1.5, -0.25, 3, -1.5, -0.25, -3, 1.5, 0.25, 3, -1.5, 0.25, 3, 1.5, 0.25, -3, -1.5, 0.25, 3, -1.5, 0.25, -3, 1.5, 0.25, -3, -1.5, -0.25, 3, 1.5, -0.25, 3, -1.5, -0.25, -3, 1.5, -0.25, 3, 1.5, -0.25, -3, -1.5, -0.25, -3)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_osktj"]
+data = PackedVector3Array(-0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, -0.25, -0.25, -0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, 0.25, 0.25, -0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, -0.25, -0.25, -0.25, -0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_10kka"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2w6fu"]
+material = SubResource("StandardMaterial3D_10kka")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="MapTable" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_cf4fr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_te05g")
+
+[node name="LevelOne" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.330486, 2.1391)
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("1_6xfrr")
+level = ExtResource("2_lt2s2")
+interacable_name = "Level One"
+interaction_description = "Press E to go to The Crypt"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelOne"]
+shape = SubResource("ConcavePolygonShape3D_osktj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LevelOne"]
+mesh = SubResource("BoxMesh_2w6fu")
+skeleton = NodePath("../..")

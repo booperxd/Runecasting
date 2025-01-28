@@ -8,7 +8,7 @@ var destination : PackedScene = load("res://Scenes/Levels/pocket_dimension.tscn"
 
 func _init():
 	spell_name = "Summon Portal"
-	pattern = [BloodRune.new().rune_name, AirRune.new().rune_name]
+	pattern = [BloodRune.new(), AirRune.new()]
 	
 func spell_effect():
 	var portal_instance : Portal = portal_scene.instantiate() as Portal

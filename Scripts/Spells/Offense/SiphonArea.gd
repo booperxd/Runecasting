@@ -8,10 +8,10 @@ var blood_particles : PackedScene = load("res://Scenes/Effects/blood_particles.t
 
 func _init():
 	spell_name = "Siphon Area"
-	pattern = [BloodRune.new().rune_name, 
-	BloodRune.new().rune_name, 
-	BloodRune.new().rune_name,
-	RadialRune.new().rune_name]
+	pattern = [BloodRune.new(), 
+	BloodRune.new(), 
+	BloodRune.new(),
+	RadialRune.new()]
 
 func spell_effect():
 	var area = Area3D.new()

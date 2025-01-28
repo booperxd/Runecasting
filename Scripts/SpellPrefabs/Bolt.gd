@@ -10,10 +10,10 @@ func _ready():
 
 func _physics_process(delta):
 	if particles.emitting:
-		velocity = -(global_transform.basis.z * cur_speed * delta)
+		move_and_collide(-transform.basis.z * delta * cur_speed)
 	else:
-		velocity = Vector3.ZERO
-	move_and_slide()
+		pass
+
 
 func _on_timer_timeout():
 	queue_free()
@@ -29,7 +29,6 @@ func _on_area_3d_area_entered(area):
 	particle_timer.start()
 	selfdestruct_timer.stop()
 	mesh.visible = false
-	velocity = Vector3.ZERO
 	if area is HitboxComponent:	
 		
 		var hitbox : HitboxComponent = area
@@ -45,4 +44,3 @@ func _on_area_3d_body_entered(body):
 	mesh.visible = false
 	particle_timer.start()
 	selfdestruct_timer.stop()
-	velocity = Vector3.ZERO

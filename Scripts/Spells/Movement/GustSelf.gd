@@ -6,7 +6,7 @@ var gust_power : float = 13.0
 
 func _init():
 	spell_name = "Vertical Gust"
-	pattern = [AirRune.new().rune_name, AirRune.new().rune_name,  SelfRune.new().rune_name]
+	pattern = [AirRune.new(), AirRune.new(),  SelfRune.new()]
 
 func spell_effect():
 	caster.velocity.y = gust_power

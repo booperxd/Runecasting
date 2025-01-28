@@ -29,16 +29,17 @@ material = SubResource("StandardMaterial3D_okevo")
 radius = 0.2
 height = 1.0
 
-[node name="IceBolt" type="CharacterBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
+[node name="IceBolt" type="RigidBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
 collision_layer = 8
 collision_mask = 17
+gravity_scale = 0.0
 script = ExtResource("1_x5ndl")
 area_collision = NodePath("Area3D")
 particles = NodePath("IceTrail")
 collision = NodePath("CollisionShape3D")
 particle_timer = NodePath("DetonationTimer")
 selfdestruct_timer = NodePath("SelfDestructTimer")
-speed = 1100.0
+speed = 5.0
 damage = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

@@ -29,13 +29,13 @@ height = 2.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8ve0e"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_50nug"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hdprr"]
 render_priority = 1
 shader = ExtResource("6_c78oi")
 
 [sub_resource type="QuadMesh" id="QuadMesh_1p6k0"]
-material = SubResource("ShaderMaterial_50nug")
-size = Vector2(15, 15)
+material = SubResource("ShaderMaterial_hdprr")
+size = Vector2(2, 2)
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_vcknt"]
 
@@ -161,8 +161,8 @@ size_flags_vertical = 3
 [node name="DrawingNotebook" parent="Head/Camera3D/CanvasLayer" instance=ExtResource("13_6rvr1")]
 
 [node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
-target_position = Vector3(0, 0, -100)
-collision_mask = 17
+target_position = Vector3(0, 0, -3)
+collision_mask = 145
 collide_with_areas = true
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="Head"]
@@ -183,7 +183,7 @@ script = ExtResource("15_yfsyk")
 script = ExtResource("17_va4ep")
 
 [node name="DashTimer" type="Timer" parent="StateMachine/RuneWizardDash"]
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [node name="RuneWizardJumping" type="Node" parent="StateMachine"]

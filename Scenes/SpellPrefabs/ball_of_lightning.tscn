@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpwkj1ei27sse"]
+
+[ext_resource type="Script" path="res://Scripts/SpellPrefabs/ball_of_lightning.gd" id="1_dqtom"]
+[ext_resource type="Shader" uid="uid://c82jsowia2di4" path="res://Material/Shaders/Fireball.tres" id="2_7y3xr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hrxlj"]
+radius = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2wbjg"]
+render_priority = 0
+shader = ExtResource("2_7y3xr")
+shader_parameter/FireColor = Color(0, 0.58, 25.44, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8cyf1"]
+flip_faces = true
+radius = 2.0
+height = 4.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_prbm6"]
+radius = 2.5
+
+[node name="BallOfLightning" type="RigidBody3D" node_paths=PackedStringArray("area_collision", "collision", "selfdestruct_timer")]
+collision_layer = 8
+collision_mask = 17
+gravity_scale = 0.0
+script = ExtResource("1_dqtom")
+area_collision = NodePath("Area3D")
+collision = NodePath("CollisionShape3D")
+selfdestruct_timer = NodePath("SelfDestructTimer")
+damage = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hrxlj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0481741, 0.00584197, -0.0139815)
+material_override = SubResource("ShaderMaterial_2wbjg")
+mesh = SubResource("SphereMesh_8cyf1")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.176471, 0.286275, 1, 1)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_prbm6")
+
+[node name="SelfDestructTimer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+autostart = true
+
+[node name="DamageFlickerTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[connection signal="timeout" from="DamageFlickerTimer" to="." method="_on_damage_flicker_timer_timeout"]

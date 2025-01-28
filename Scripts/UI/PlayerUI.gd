@@ -42,12 +42,8 @@ func on_rune_changed(rune : Rune, page : int):
 	var key = "rune_" + str(page)
 	Global.player.player_spells.current_runes[key] = rune
 
-func on_interaction_near(type : Global.Interactables):
-	if type == Global.Interactables.StudyTable:
-		interaction_label.text = "E to open study table"
-	elif type == Global.Interactables.Portal:
-		interaction_label.text = "E to go through portal"
-	elif type == Global.Interactables.Lever:
-		interaction_label.text = "E to flip lever"
+func on_interaction_near(obj : Interactable):
+	if obj == null:
+		interaction_label.text = ""
 	else:
-		interaction_label.text=""
+		interaction_label.text = obj.interaction_description

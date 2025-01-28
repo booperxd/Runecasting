@@ -14,6 +14,7 @@ extends Node
 var points_left
 var current_points_out = 0
 var active : bool
+var completed : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,23 +26,26 @@ func _ready():
 	Global.enemy_beat_in_room.connect(_on_enemy_defeated)
 
 func _physics_process(delta):
-	if not active:
+	if not active or completed:
 		return
 	if points_left <= 0 and current_points_out <= 0:
 		Global.beat_fight_room.emit(room_name)
 		active = false
+		completed = true
 
 func _on_room_entered(_room_name):
-	if room_name != _room_name:
+	if room_name != _room_name or completed or active:
 		return
 	start_fight()
 	
 func _on_enemy_defeated():
 	if not active:
 		return
+	
 	current_points_out-=1	
 
 func start_fight():
+	Global.fight_room_started.emit(room_name)
 	await get_tree().create_timer(spawn_delay).timeout
 	for point in spawn_points:
 		spawn_enemy(point)

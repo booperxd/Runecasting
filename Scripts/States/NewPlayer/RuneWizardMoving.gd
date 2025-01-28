@@ -20,6 +20,7 @@ func update(delta):
 	if Input.is_action_just_pressed("dash") and p.stamina >= p.dash_cost:
 		p.stamina -= p.dash_cost
 		sm.transition("RuneWizardDash")
+		return
 	
 	if Input.is_action_just_pressed("ui_accept") and p.is_on_floor() and Input.mouse_mode==Input.MOUSE_MODE_CAPTURED:
 		sm.transition("RuneWizardJumping")
@@ -52,5 +53,5 @@ func update(delta):
 		p.velocity.x = lerp(p.velocity.x,direction.x * p.SPEED, delta * 3.0)
 		p.velocity.z = lerp(p.velocity.z,direction.z * p.SPEED, delta * 3.0)
 	p.t_bob += delta * p.velocity.length() * float(p.is_on_floor())
-	p.camera.transform.origin = p.headbob()
+	#p.camera.transform.origin = p.headbob()
 	

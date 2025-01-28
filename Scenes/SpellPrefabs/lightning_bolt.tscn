@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpq3bujvean31"]
+
+[ext_resource type="ArrayMesh" uid="uid://cel6siiu35lv5" path="res://Scenes/SpellPrefabs/lightning_bolt_mesh.tres" id="1_lwgvm"]
+[ext_resource type="Script" path="res://Scripts/SpellPrefabs/lightning_bolt.gd" id="2_ldu6d"]
+
+[node name="LightningMesh" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -8, 0, 1, -3.49691e-07, 0, 0, 0)
+cast_shadow = 0
+mesh = ExtResource("1_lwgvm")
+skeleton = NodePath("")
+script = ExtResource("2_ldu6d")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+autostart = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.125, 0, 3.07286e-07, 0.878736)
+light_color = Color(0.0705882, 0.113725, 1, 1)
+light_energy = 5.0
+omni_range = 7.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

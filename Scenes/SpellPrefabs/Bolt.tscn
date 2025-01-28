@@ -42,16 +42,17 @@ shader_parameter/FireColor = Color(2, 1.2, 0.5, 1)
 radius = 0.3
 height = 0.6
 
-[node name="Bolt" type="CharacterBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
+[node name="Bolt" type="RigidBody3D" node_paths=PackedStringArray("area_collision", "particles", "collision", "particle_timer", "selfdestruct_timer")]
 collision_layer = 8
 collision_mask = 17
+gravity_scale = 0.0
 script = ExtResource("1_14ogt")
 area_collision = NodePath("Area3D")
 particles = NodePath("OrangeTrail")
 collision = NodePath("CollisionShape3D")
 particle_timer = NodePath("DetonationTimer")
 selfdestruct_timer = NodePath("SelfDestructTimer")
-speed = 1300.0
+speed = 10.0
 damage = 6.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://bp8g16vlol0m1"
+path="res://.godot/imported/dungeon_test.8.map-da4b4a97ac78ebc4c39e99a2df8bc091.tres"
+
+[deps]
+
+source_file="res://Maps/autosave/dungeon_test.8.map"
+dest_files=["res://.godot/imported/dungeon_test.8.map-da4b4a97ac78ebc4c39e99a2df8bc091.tres"]
+
+[params]
+

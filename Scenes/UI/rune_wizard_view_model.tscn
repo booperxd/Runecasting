@@ -3179,14 +3179,17 @@ bones/67/rotation = Quaternion(0, 0, 0, 1)
 bones/67/scale = Vector3(1, 1, 1)
 
 [node name="Object_74" type="MeshInstance3D" parent="Skeleton3D"]
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_2oe1k")
 skin = SubResource("Skin_i2d7i")
 
 [node name="Object_75" type="MeshInstance3D" parent="Skeleton3D"]
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_7fk7m")
 skin = SubResource("Skin_i2d7i")
 
 [node name="Object_76" type="MeshInstance3D" parent="Skeleton3D"]
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_six62")
 skin = SubResource("Skin_i2d7i")
 

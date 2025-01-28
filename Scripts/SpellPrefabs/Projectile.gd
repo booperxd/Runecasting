@@ -1,6 +1,6 @@
 class_name Projectile
 
-extends CharacterBody3D
+extends RigidBody3D
 
 @export var area_collision : Area3D
 @export var particles : GPUParticles3D

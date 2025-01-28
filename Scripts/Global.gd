@@ -10,7 +10,7 @@ signal notebook_saved(bytes : ViewportTexture)
 
 signal open_toast(text)
 signal spell_finished(current_pattern)
-signal interactable_near(type : Interactables)
+signal interactable_near(type : Interactable)
 
 signal finale_spell_casted()
 
@@ -23,6 +23,7 @@ signal channel_finished(patterns)
 signal rune_changed(rune, page)
 
 signal enter_fight_room(room_name)
+signal fight_room_started(room_name)
 signal beat_fight_room(room_name)
 signal enemy_beat_in_room()
 
@@ -31,13 +32,6 @@ var previous_scene : PackedScene
 var player : RuneWizard
 var player_settings : PlayerSettings
 var save_data : SaveData
-
-enum Interactables {
-	None,
-	StudyTable,
-	Portal,
-	Lever
-}
 
 func _ready():
 	save_data = SaveData.load_or_create()

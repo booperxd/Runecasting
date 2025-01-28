@@ -1,6 +1,6 @@
 class_name Portal
 
-extends Area3D
+extends Interactable
 
 @export var destination_scene : PackedScene
 
@@ -16,14 +16,9 @@ func _process(delta):
 		Global.previous_scene = scene
 		get_tree().change_scene_to_packed(destination_scene)
 
-func _on_body_entered(body):
-	if body.is_in_group("player"):
-		Global.interactable_near.emit(Global.Interactables.Portal)
-		can_teleport = true
+func on_interact_hit():
+	can_teleport = true
 		
 
-
-func _on_body_exited(body):
-	if body.is_in_group("player"):
-		Global.interactable_near.emit(Global.Interactables.None)
-		can_teleport = false
+func on_interact_leave():
+	can_teleport = false

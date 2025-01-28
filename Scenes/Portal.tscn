@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://de4j1pxs1xte7"]
+[gd_scene load_steps=6 format=3 uid="uid://de4j1pxs1xte7"]
 
 [ext_resource type="Script" path="res://Scripts/Portal.gd" id="1_q3xhi"]
+[ext_resource type="PackedScene" uid="uid://dq8ov2giq4ppq" path="res://Scenes/Levels/pocket_dimension.tscn" id="2_caw5j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_61pdv"]
 albedo_color = Color(1, 0.243137, 0.976471, 1)
@@ -20,6 +21,9 @@ size = Vector3(5, 5, 3)
 collision_layer = 128
 collision_mask = 2
 script = ExtResource("1_q3xhi")
+destination_scene = ExtResource("2_caw5j")
+interacable_name = "Portal"
+interaction_description = "Press E to teleport"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_61pdv")

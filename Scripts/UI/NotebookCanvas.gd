@@ -13,9 +13,17 @@ var _current_line : Line2D = null
 
 func _ready():
 	await(Global._ready)
-	if Global.save_data != null and Global.save_data.player_notebook != null or !Global.save_data.player_notebook.is_empty():
-		for line in Global.save_data.player_notebook:
+	
+	if Global.save_data != null and Global.save_data.packed_notebook != null:
+		var saved_lines : Line2D = Global.save_data.unpack_notebook() 
+		if saved_lines == null:
+			return
+		for line in saved_lines.get_children():
+			saved_lines.remove_child(line)
+			line.set_owner(lines)
+			
 			lines.add_child(line)
+			Global.save_data.player_notebook = lines
 
 func _input(event):
 	if !owner.visible:
@@ -28,6 +36,7 @@ func _input(event):
 				_current_line = Line2D.new()
 				_current_line.default_color = Color.BLUE
 				_current_line.width = 4
+				_current_line.owner = lines
 				lines.add_child(_current_line)
 				_current_line.add_point(event.position)
 
@@ -38,11 +47,6 @@ func _input(event):
 		var removed_line = lines.get_children()[lines.get_child_count() - 1]
 		removed_line.queue_free()
 
-func get_lines() -> Array[Line2D]:
-	var _lines : Array[Line2D]
-	for line in lines.get_children():
-		if line is Line2D:
-			_lines.append(line)
-	
-	return _lines
+func get_lines() -> Line2D:
+	return lines
 

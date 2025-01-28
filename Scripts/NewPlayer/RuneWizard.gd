@@ -27,11 +27,13 @@ var dash_cost : float = 33
 var player_settings : PlayerSettings
 
 @onready var state_machine : StateMachine = $StateMachine
-@onready var raycast = $Head/Camera3D/RayCast3D
+@onready var raycast : RayCast3D = $Head/Camera3D/RayCast3D
 @onready var camera : Camera3D = $Head/Camera3D
 @onready var viewmodel_viewport :SubViewport = $Head/Camera3D/SubViewportContainer/SubViewport
+@onready var viewmodel_scene : RuneWizardViewModel = $Head/Camera3D/SubViewportContainer/SubViewport/RuneWizardViewModel
 @onready var pause_menu : Control = $Head/Camera3D/CanvasLayer/Menu/PauseMenu
 
+var cur_interactable : Interactable
 
 func _ready():
 	super._ready()
@@ -77,6 +79,18 @@ func _physics_process(delta):
 		else:
 			notebook_visible = true
 			viewmodel.left_arm_player.play("view book")
+			
+	if raycast.is_colliding():
+		if raycast.get_collider() is Interactable and cur_interactable != raycast.get_collider():
+			var interactable : Interactable = raycast.get_collider() as Interactable
+			cur_interactable = interactable
+			
+			Global.interactable_near.emit(interactable)
+			cur_interactable.on_interact_hit()
+	elif cur_interactable != null:
+		cur_interactable.on_interact_leave()
+		cur_interactable = null
+		Global.interactable_near.emit(cur_interactable)
 	move_and_slide()
 
 

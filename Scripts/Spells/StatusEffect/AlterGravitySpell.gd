@@ -4,7 +4,7 @@ extends RuneSpell
 
 func _init():
 	spell_name = "Alter Gravity"
-	pattern = [GravityRune.new().rune_name, SelfRune.new().rune_name]
+	pattern = [GravityRune.new(), SelfRune.new()]
 
 func spell_effect():
 	caster.add_effect(LowGravity.new())

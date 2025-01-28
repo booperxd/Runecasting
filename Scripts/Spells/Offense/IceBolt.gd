@@ -6,7 +6,7 @@ var projectile : PackedScene = load("res://Scenes/SpellPrefabs/ice_bolt.tscn")
 
 func _init():
 	spell_name = "Ice Bolt"
-	pattern = [FrostRune.new().rune_name, ProjectileRune.new().rune_name]
+	pattern = [FrostRune.new(), ProjectileRune.new()]
 	
 func spell_effect():
 	var instance : IceBoltProjectile = projectile.instantiate()

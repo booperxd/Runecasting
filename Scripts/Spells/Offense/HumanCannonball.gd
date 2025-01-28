@@ -5,7 +5,7 @@ extends RuneSpell
 
 func _init():
 	spell_name = "Human Cannonball"
-	pattern = [GravityRune.new().rune_name, GravityRune.new().rune_name, SelfRune.new().rune_name, ProjectileRune.new().rune_name]
+	pattern = [GravityRune.new(), GravityRune.new(), SelfRune.new(), ProjectileRune.new()]
 	
 func spell_effect():
 	if caster is RuneWizard:

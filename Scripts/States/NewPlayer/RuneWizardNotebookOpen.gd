@@ -8,6 +8,7 @@ var notebook_image : ViewportTexture
 
 func _ready():
 	super._ready()
+	
 	await RenderingServer.frame_post_draw
 	
 	notebook_image = notebook_ui.get_canvas_viewport()

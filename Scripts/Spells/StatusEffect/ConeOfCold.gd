@@ -6,7 +6,7 @@ var frost_sphere_scene : PackedScene = load("res://Scenes/SpellPrefabs/frost_rad
 
 func _init():
 	spell_name = "Cone of Cold"
-	pattern = [FrostRune.new().rune_name, RadialRune.new().rune_name,  FrostRune.new().rune_name]
+	pattern = [FrostRune.new(), RadialRune.new(),  FrostRune.new()]
 
 func spell_effect():
 	var frost_instance = frost_sphere_scene.instantiate()

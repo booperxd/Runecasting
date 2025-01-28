@@ -6,3 +6,4 @@ func _init():
 	rune_name = "Frost"
 	rune_desc = "The power of frost, the moon, and apotrphy"
 	rune_icon = load("res://textures/UI/RuneIcons/frost.png")
+	unlocked_by_default = false

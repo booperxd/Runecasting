@@ -2,7 +2,6 @@ class_name RuneWizardIdle
 
 extends RuneWizardState
 
-
 func _unhandled_input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode==Input.MOUSE_MODE_CAPTURED:
 		p.head.rotate_y(-event.relative.x * (p.player_settings.sens / 10))

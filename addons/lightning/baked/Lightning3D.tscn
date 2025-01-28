@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwybaemylrmun"]
+
+[ext_resource type="Script" path="res://addons/lightning/baked/Lightning3D.gd" id="1"]
+
+[sub_resource type="Curve3D" id="Curve3D_nmbox"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 7.58266, -1.67731, 6.92244, 0, 0, 0, 0, 0, 0, 0.0292575, -2.79721, 9.29397, 0, 0, 0, 0, 0, 0, 0.186287, 2.61017, 0.58131),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ah6h3"]
+size = Vector2(0.6, 7.99576)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a4rj4"]
+size = Vector2(0.6, 10.2555)
+
+[node name="Lightning3D" type="Path3D"]
+curve = SubResource("Curve3D_nmbox")
+script = ExtResource("1")
+meshs = [SubResource("PlaneMesh_ah6h3"), SubResource("PlaneMesh_a4rj4")]
+width = 0.6
+
+[connection signal="tree_entered" from="." to="." method="_on_Lightning3D_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_Lightning3D_tree_exiting"]
+[connection signal="visibility_changed" from="." to="." method="_on_Lightning3D_visibility_changed"]

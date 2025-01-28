@@ -4,13 +4,21 @@ extends RuneWizardState
 
 @onready var dash_timer = $DashTimer
 
+var starting_vel : Vector3
+
 func enter():
+	starting_vel = p.velocity
+	starting_vel.y = 0
 	Global.set_player_stamina.emit(p.stamina)
 	p.input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = (p.head.transform.basis * Vector3(p.input_dir.x, 0, p.input_dir.y)).normalized()	
+	if direction == Vector3.ZERO:
+		direction = p.get_direction()
+		direction.y = 0
 	p.velocity.y = 0
 	p.velocity.x = p.HORIZONTAL_ACCELERATION * direction.x
 	p.velocity.z = p.HORIZONTAL_ACCELERATION * direction.z
+	
 	dash_timer.start()
 
 func update(delta):
@@ -29,4 +37,5 @@ func update(delta):
 
 
 func _on_dash_timer_timeout():
+	p.velocity = starting_vel
 	sm.transition("RuneWizardIdle")

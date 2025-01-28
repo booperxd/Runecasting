@@ -20,7 +20,10 @@ func on_spell_casted():
 		stack_rune_pattern.append(pop_stack().rune_name)
 		
 	for spell in learned_spells:
-		if spell.pattern == stack_rune_pattern:
+		var spell_rune_pattern : Array[String]
+		for rune in spell.pattern:
+			spell_rune_pattern.append(rune.rune_name)
+		if spell_rune_pattern == stack_rune_pattern:
 			spell.caster = owner as Being
 			spell.spell_effect()
 			Global.open_toast.emit(str("Cast ", spell.spell_name))
